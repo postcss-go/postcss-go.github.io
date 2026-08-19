@@ -1,13 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="description" content="Architecture"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Architecture · postcss-go</title><script>
-  (() => {
-    const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    try {
-      document.documentElement.dataset.theme = localStorage.getItem('postcss-go-theme') || system;
-    } catch {
-      document.documentElement.dataset.theme = system;
-    }
-  })();
-</script><link rel="stylesheet" href="/_astro/SiteNav.o3bCsUYS.css"></head><body><div class="fixed inset-0 -z-10 grid-bg"></div><div class="fixed inset-0 -z-10 noise"></div><nav class="site-nav mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10"><a href="/" class="flex items-center gap-3 font-mono text-sm font-bold tracking-tight"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-acid text-ink">›_</span>postcss-go<span class="hidden rounded border border-white/15 px-2 py-1 text-[10px] font-normal uppercase tracking-[.18em] text-white/50 sm:block">experimental</span></a><div class="site-nav__links hidden items-center gap-2 text-xs font-medium text-white/55 md:flex"><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid site-nav__link" href="/guide/get-started/">Guide</a><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid site-nav__link" href="/progress/">Progress</a><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid text-acid site-nav__link" href="/architecture/" aria-current="page">Architecture</a><button id="theme-toggle" class="theme-toggle site-nav__link rounded-full border border-transparent px-3 py-2 transition cursor-pointer hover:text-acid" type="button" aria-label="Toggle color theme" title="Toggle color theme">☼</button><a class="site-nav__github flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white transition hover:text-acid" href="https://github.com/postcss-go/postcss-go" target="_blank" rel="noreferrer"><span>GitHub ↗</span><span class="text-white/25" aria-hidden="true">·</span><span class="flex items-center gap-1 font-mono text-[10px]" aria-label="GitHub stars"><span aria-hidden="true">★</span><span id="github-star-count">0</span></span></a></div></nav><script type="module">var e=document.querySelector(`#theme-toggle`),t=document.documentElement;function n(){let n=t.dataset.theme===`light`;e&&(e.textContent=n?`☾`:`☼`,e.setAttribute(`aria-label`,n?`Switch to dark mode`:`Switch to light mode`),e.setAttribute(`title`,n?`Switch to dark mode`:`Switch to light mode`))}n(),e?.addEventListener(`click`,()=>{let e=t.dataset.theme===`light`?`dark`:`light`;t.dataset.theme=e;try{localStorage.setItem(`postcss-go-theme`,e)}catch{}n()});</script><main class="progress-content mx-auto max-w-5xl px-6 pb-24 pt-12 lg:px-10 lg:pt-20"><section class="mb-14 border-b border-violet/40 pb-12" aria-labelledby="architecture-title">
+---
+layout: ../layouts/ContentLayout.astro
+title: Architecture
+---
+
+<section class="mb-14 border-b border-violet/40 pb-12" aria-labelledby="architecture-title">
   <div class="mb-6 font-mono text-[.68rem] uppercase tracking-[.16em] text-violet">SYSTEM DESIGN / CURRENT SHAPE</div>
   <h1 id="architecture-title" class="m-0 text-[clamp(3.5rem,9vw,7rem)] leading-[.86] tracking-[-.08em]">
     Fast where<br />
@@ -15,6 +11,7 @@
   </h1>
   <p class="mb-0 mt-6 max-w-[42rem] text-[1.1rem] leading-[1.7] text-white/70">A fast Go CSS engine behind a PostCSS-compatible JavaScript surface. The Go core owns the hot path; Node and browser packages own ecosystem integration.</p>
 </section>
+
 <section class="mb-16 grid grid-cols-1 items-stretch gap-8 min-[761px]:grid-cols-[minmax(0,.8fr)_minmax(0,1.2fr)]" aria-label="postcss-go architecture">
   <div class="flex items-center">
     <div class="grid gap-6">
@@ -78,6 +75,7 @@
     </div>
   </div>
 </section>
+
 <section class="mt-20 max-[760px]:mt-16" aria-labelledby="boundaries-title">
   <div class="mb-6">
     <span class="font-mono text-[.68rem] uppercase tracking-[.14em] text-violet">02 / SYSTEM MAP</span>
@@ -96,6 +94,7 @@
     </table>
   </div>
 </section>
+
 <section class="mt-20 max-[760px]:mt-16" aria-labelledby="flow-title">
   <div class="mb-6">
     <span class="font-mono text-[.68rem] uppercase tracking-[.14em] text-violet">03 / RUNTIME PATH</span>
@@ -148,4 +147,3 @@
     </table>
   </div>
 </section>
-</main></body></html>
