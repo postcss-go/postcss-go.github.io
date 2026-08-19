@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="description" content="Migration and compatibility"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Migration and compatibility · postcss-go</title><script>
+  (() => {
+    const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem('postcss-go-theme') || system;
+    } catch {
+      document.documentElement.dataset.theme = system;
+    }
+  })();
+</script><link rel="stylesheet" href="/_astro/SiteNav.o3bCsUYS.css"></head><body><div class="fixed inset-0 -z-10 grid-bg"></div><div class="fixed inset-0 -z-10 noise"></div><nav class="site-nav mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10"><a href="/" class="flex items-center gap-3 font-mono text-sm font-bold tracking-tight"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-acid text-ink">›_</span>postcss-go<span class="hidden rounded border border-white/15 px-2 py-1 text-[10px] font-normal uppercase tracking-[.18em] text-white/50 sm:block">experimental</span></a><div class="site-nav__links hidden items-center gap-2 text-xs font-medium text-white/55 md:flex"><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid text-acid site-nav__link" href="/guide/get-started/" aria-current="page">Guide</a><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid site-nav__link" href="/progress/">Progress</a><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid site-nav__link" href="/architecture/">Architecture</a><button id="theme-toggle" class="theme-toggle site-nav__link rounded-full border border-transparent px-3 py-2 transition cursor-pointer hover:text-acid" type="button" aria-label="Toggle color theme" title="Toggle color theme">☼</button><a class="site-nav__github flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white transition hover:text-acid" href="https://github.com/postcss-go/postcss-go" target="_blank" rel="noreferrer"><span>GitHub ↗</span><span class="text-white/25" aria-hidden="true">·</span><span class="flex items-center gap-1 font-mono text-[10px]" aria-label="GitHub stars"><span aria-hidden="true">★</span><span id="github-star-count">0</span></span></a></div></nav><script type="module">var e=document.querySelector(`#theme-toggle`),t=document.documentElement;function n(){let n=t.dataset.theme===`light`;e&&(e.textContent=n?`☾`:`☼`,e.setAttribute(`aria-label`,n?`Switch to dark mode`:`Switch to light mode`),e.setAttribute(`title`,n?`Switch to dark mode`:`Switch to light mode`))}n(),e?.addEventListener(`click`,()=>{let e=t.dataset.theme===`light`?`dark`:`light`;t.dataset.theme=e;try{localStorage.setItem(`postcss-go-theme`,e)}catch{}n()});</script><main class="mx-auto grid max-w-7xl grid-cols-1 gap-[clamp(3.5rem,9vw,8rem)] px-6 pb-24 pt-8 min-[761px]:grid-cols-[15rem_minmax(0,1fr)] lg:px-10 lg:pt-16"><aside class="mb-10 self-start min-[761px]:sticky min-[761px]:top-8 min-[761px]:mb-0" aria-label="Guide navigation"><div class="mb-4 font-mono text-[.68rem] uppercase tracking-[.14em] text-acid">Documentation</div><nav class="flex gap-5 overflow-x-auto whitespace-nowrap border-t border-white/10 px-0 pb-[.35rem] pt-[.95rem] min-[761px]:grid min-[761px]:gap-[.45rem] min-[761px]:overflow-visible min-[761px]:whitespace-normal min-[761px]:border-l min-[761px]:border-t-0 min-[761px]:pl-4 min-[761px]:pb-0 min-[761px]:pt-0"><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/get-started/">Get started</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/cli-reference/">CLI reference</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/javascript-api/">JavaScript API</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/browser-wasm/">Browser and WASM</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/core-css-compatibility/">Core CSS compatibility</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid! text-acid!" href="/guide/migration/" aria-current="page">Migration</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/go-api/">Go API</a></nav></aside><article class="progress-content guide-content min-w-0 max-w-none min-[761px]:max-w-[52rem]"><h1 id="migration-and-compatibility">Migration and compatibility</h1>
+<p><code>postcss-go</code> keeps the familiar plugin and configuration shapes while
+making execution explicit and removing PostCSS from the production dependency
+graph.</p>
+<h2 id="migration-checklist">Migration checklist</h2>
+<ol>
+<li>Install <code>@postcss-go/core</code>. Remove <code>postcss</code>, <code>postcss-load-config</code>, and
+<code>postcss-reporter</code> if no other tool in the project uses them.</li>
+<li>Replace <code>postcss</code> CLI commands with <code>postcss-go</code>. Existing JS, MJS, or CJS
+config files can stay when they use the supported contract below.</li>
+<li>Replace implicit <code>LazyResult</code> reads with
+<code>await postcss(plugins).process(css, options)</code>. For a fully synchronous chain,
+use <code>processSync</code> and keep every plugin callback synchronous.</li>
+<li>Remove explicit default parser and stringifier delegates. Audit custom
+syntax packages and custom AST node classes before switching.</li>
+<li>Verify native installation with <code>getBackendCapabilities()</code> during startup
+when your deployment treats optional dependencies specially. Record
+<code>result.backend</code> in processing diagnostics.</li>
+</ol>
+<h2 id="compatibility-table">Compatibility table</h2>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Current contract</th>
+<th>Migration note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plugins</td>
+<td>PostCSS-shaped creators, packs, visitors, <code>prepare</code>, <code>Once</code>, and <code>OnceExit</code>; sync and async</td>
+<td>Plugins receive postcss-go-owned live nodes and helpers. Prefer <code>helpers.Rule</code> / <code>helpers.postcss</code> over <code>require('postcss')</code> constructors.</td>
+</tr>
+<tr>
+<td>Plugin diagnostics</td>
+<td>Named errors for invalid plugins, unknown visitor events, and syntax-as-plugin</td>
+<td><code>InvalidPluginError</code>, <code>UnknownPluginEventError</code>, <code>UnsupportedPluginFeatureError</code>; no PostCSS fallback</td>
+</tr>
+<tr>
+<td>Configuration</td>
+<td><code>.js</code>, <code>.mjs</code>, <code>.cjs</code>, <code>.json</code>; object or async function</td>
+<td>Loaded by postcss-go, not <code>postcss-load-config</code></td>
+</tr>
+<tr>
+<td>Context</td>
+<td><code>env</code>, config <code>cwd</code>, input <code>file</code>, and CLI <code>options</code></td>
+<td><code>env</code> defaults to <code>NODE_ENV</code>, then <code>development</code></td>
+</tr>
+<tr>
+<td>Maps</td>
+<td>Boolean/object map options, previous maps, callback annotations, inline/external output</td>
+<td>Go owns generation, composition, and annotations</td>
+</tr>
+<tr>
+<td>Custom parser/syntax/stringifier</td>
+<td>Publicly typed and validated, currently unsupported</td>
+<td>Throws <code>UnsupportedSyntaxError</code>; no fallback</td>
+</tr>
+<tr>
+<td>Custom AST nodes</td>
+<td>Built-in node classes cross native and WASM boundaries</td>
+<td>Unknown node types throw <code>UnsupportedAstNodeError</code></td>
+</tr>
+<tr>
+<td>Results</td>
+<td>Explicit <code>Promise&lt;Result&gt;</code> or immediate sync <code>Result</code></td>
+<td>No implicit <code>LazyResult</code> execution</td>
+</tr>
+<tr>
+<td>Node transport</td>
+<td>Worker-backed async N-API and in-process sync N-API</td>
+<td>Missing addon throws a backend-unavailable error</td>
+</tr>
+<tr>
+<td>Browser transport</td>
+<td>Worker-backed WASM; JS plugins via <code>createBrowserProcessor</code></td>
+<td>Async-only; <code>*Sync</code> APIs and sync CSS plugin helpers throw <code>SyncBackendUnavailableError</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="typed-standalone-config">Typed standalone config</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ts"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#F97583"> type</span><span style="color:#E1E4E8"> { PostcssGoConfigExport } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '@postcss-go/core'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#B392F0"> config</span><span style="color:#F97583">:</span><span style="color:#B392F0"> PostcssGoConfigExport</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">ctx</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> ({</span></span>
+<span class="line"><span style="color:#6A737D">  // Prefer CLI `--map` / `--no-map` when present; otherwise choose by env.</span></span>
+<span class="line"><span style="color:#E1E4E8">  map: ctx.options.map </span><span style="color:#F97583">??</span><span style="color:#E1E4E8"> (ctx.env </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'production'</span><span style="color:#F97583"> ?</span><span style="color:#E1E4E8"> { inline: </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8"> } </span><span style="color:#F97583">:</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">  plugins: {</span></span>
+<span class="line"><span style="color:#E1E4E8">    autoprefixer: {},</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> default</span><span style="color:#E1E4E8"> config;</span></span></code></pre>
+<p>Plugins can also be supplied as an array of already-created plugin values.
+Process options can be placed at the top level or in <code>options</code>; the top level
+wins when the same key appears in both locations. On the CLI, explicit
+<code>--map</code> / <code>--no-map</code> still override whatever the config returns, and <code>--use</code>
+replaces only the plugin list while keeping other config options.</p>
+</article></main><script type="module">async function e(e,t){try{await navigator.clipboard.writeText(e)}catch{let e=window.getSelection(),n=document.createRange(),r=t.closest(`[data-code-sample], [data-install-panel]`)?.querySelector(`code`)||t.parentElement?.querySelector(`code`);r&&(n.selectNodeContents(r),e?.removeAllRanges(),e?.addRange(n),document.execCommand(`copy`),e?.removeAllRanges())}t.textContent=`Copied`,window.setTimeout(()=>{t.textContent=`Copy`},1400)}document.querySelectorAll(`[data-code-sample]`).forEach(t=>{let n=t.querySelector(`[data-copy-code]`),r=t.querySelector(`code`);!n||!r||n.addEventListener(`click`,async()=>{await e(r.textContent||``,n)})}),document.querySelectorAll(`[data-install-tabs]`).forEach(t=>{let n=Array.from(t.querySelectorAll(`[data-install-tab]`)),r=Array.from(t.querySelectorAll(`[data-install-panel]`));n.forEach((e,t)=>{e.addEventListener(`click`,()=>{let t=e.dataset.installTab;t&&(n.forEach(t=>{let n=t===e;t.setAttribute(`aria-selected`,String(n)),t.tabIndex=n?0:-1}),r.forEach(e=>{e.hidden=e.dataset.installPanel!==t}))}),e.addEventListener(`keydown`,e=>{if(e.key!==`ArrowRight`&&e.key!==`ArrowLeft`)return;e.preventDefault();let r=e.key===`ArrowRight`?1:-1;n[(t+r+n.length)%n.length]?.focus()})}),t.querySelectorAll(`[data-install-copy]`).forEach(t=>{t.addEventListener(`click`,async()=>{let n=t.parentElement?.querySelector(`code`);await e(n?.textContent||``,t)})})});</script></body></html>

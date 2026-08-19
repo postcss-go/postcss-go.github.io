@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="description" content="JavaScript API"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>JavaScript API · postcss-go</title><script>
+  (() => {
+    const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem('postcss-go-theme') || system;
+    } catch {
+      document.documentElement.dataset.theme = system;
+    }
+  })();
+</script><link rel="stylesheet" href="/_astro/SiteNav.o3bCsUYS.css"></head><body><div class="fixed inset-0 -z-10 grid-bg"></div><div class="fixed inset-0 -z-10 noise"></div><nav class="site-nav mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10"><a href="/" class="flex items-center gap-3 font-mono text-sm font-bold tracking-tight"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-acid text-ink">›_</span>postcss-go<span class="hidden rounded border border-white/15 px-2 py-1 text-[10px] font-normal uppercase tracking-[.18em] text-white/50 sm:block">experimental</span></a><div class="site-nav__links hidden items-center gap-2 text-xs font-medium text-white/55 md:flex"><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid text-acid site-nav__link" href="/guide/get-started/" aria-current="page">Guide</a><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid site-nav__link" href="/progress/">Progress</a><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid site-nav__link" href="/architecture/">Architecture</a><button id="theme-toggle" class="theme-toggle site-nav__link rounded-full border border-transparent px-3 py-2 transition cursor-pointer hover:text-acid" type="button" aria-label="Toggle color theme" title="Toggle color theme">☼</button><a class="site-nav__github flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white transition hover:text-acid" href="https://github.com/postcss-go/postcss-go" target="_blank" rel="noreferrer"><span>GitHub ↗</span><span class="text-white/25" aria-hidden="true">·</span><span class="flex items-center gap-1 font-mono text-[10px]" aria-label="GitHub stars"><span aria-hidden="true">★</span><span id="github-star-count">0</span></span></a></div></nav><script type="module">var e=document.querySelector(`#theme-toggle`),t=document.documentElement;function n(){let n=t.dataset.theme===`light`;e&&(e.textContent=n?`☾`:`☼`,e.setAttribute(`aria-label`,n?`Switch to dark mode`:`Switch to light mode`),e.setAttribute(`title`,n?`Switch to dark mode`:`Switch to light mode`))}n(),e?.addEventListener(`click`,()=>{let e=t.dataset.theme===`light`?`dark`:`light`;t.dataset.theme=e;try{localStorage.setItem(`postcss-go-theme`,e)}catch{}n()});</script><main class="mx-auto grid max-w-7xl grid-cols-1 gap-[clamp(3.5rem,9vw,8rem)] px-6 pb-24 pt-8 min-[761px]:grid-cols-[15rem_minmax(0,1fr)] lg:px-10 lg:pt-16"><aside class="mb-10 self-start min-[761px]:sticky min-[761px]:top-8 min-[761px]:mb-0" aria-label="Guide navigation"><div class="mb-4 font-mono text-[.68rem] uppercase tracking-[.14em] text-acid">Documentation</div><nav class="flex gap-5 overflow-x-auto whitespace-nowrap border-t border-white/10 px-0 pb-[.35rem] pt-[.95rem] min-[761px]:grid min-[761px]:gap-[.45rem] min-[761px]:overflow-visible min-[761px]:whitespace-normal min-[761px]:border-l min-[761px]:border-t-0 min-[761px]:pl-4 min-[761px]:pb-0 min-[761px]:pt-0"><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/get-started/">Get started</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/cli-reference/">CLI reference</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid! text-acid!" href="/guide/javascript-api/" aria-current="page">JavaScript API</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/browser-wasm/">Browser and WASM</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/core-css-compatibility/">Core CSS compatibility</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/migration/">Migration</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/go-api/">Go API</a></nav></aside><article class="progress-content guide-content min-w-0 max-w-none min-[761px]:max-w-[52rem]"><h1 id="javascript-api">JavaScript API</h1>
+<p><code>postcss-go</code> is the Node.js and TypeScript integration surface. It owns
+the public classes, plugin runtime, and explicit asynchronous and synchronous
+processing APIs.</p>
+<h2 id="api-at-a-glance">API at a glance</h2>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Asynchronous</th>
+<th>Synchronous</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Parse</td>
+<td><code>parse</code></td>
+<td><code>parseSync</code></td>
+</tr>
+<tr>
+<td>Process</td>
+<td><code>postcss(plugins).process</code>, <code>process</code></td>
+<td><code>postcss(plugins).processSync</code>, <code>processSync</code></td>
+</tr>
+<tr>
+<td>Output</td>
+<td><code>stringify</code></td>
+<td><code>stringifySync</code></td>
+</tr>
+<tr>
+<td>No work</td>
+<td><code>noWork</code></td>
+<td><code>noWorkSync</code></td>
+</tr>
+<tr>
+<td>Service</td>
+<td>Worker-backed native by default</td>
+<td>In-process native N-API</td>
+</tr>
+</tbody>
+</table>
+<h2 id="processor-lifecycle">Processor lifecycle</h2>
+<p>The default export is the PostCSS-compatible entry point. It returns a reusable
+postcss-go-owned <code>Processor</code>; processing resolves to a postcss-go-owned
+<code>Result</code>, never to a PostCSS <code>LazyResult</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ts"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> postcss </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '@postcss-go/core'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> result</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> postcss</span><span style="color:#E1E4E8">([</span></span>
+<span class="line"><span style="color:#E1E4E8">  {</span></span>
+<span class="line"><span style="color:#E1E4E8">    postcssPlugin: </span><span style="color:#9ECBFF">'to-blue'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">    Declaration</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">decl</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (decl.prop </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'color'</span><span style="color:#E1E4E8">) decl.value </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> 'blue'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#E1E4E8">]).</span><span style="color:#B392F0">process</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'.button { color: red }'</span><span style="color:#E1E4E8">, { from: </span><span style="color:#9ECBFF">'input.css'</span><span style="color:#E1E4E8"> });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(result.css);</span></span></code></pre>
+<p>Plugins receive live postcss-go <code>Root</code>, <code>Rule</code>, <code>Declaration</code>, and other node
+instances. <code>result</code>, <code>result.root</code>, <code>result.opts</code> (<code>from</code>, <code>to</code>, and other process
+options), source/input metadata, custom <code>result.messages</code>, warnings,
+<code>lastPlugin</code>, and <code>helpers.postcss</code> are implemented by this package.</p>
+<p><code>result.warn()</code> and <code>node.warn(result, text)</code> record <code>Warning</code> objects with
+plugin, node, source, input, line, and column metadata. File and directory
+dependency messages (<code>type: 'dependency'</code> / <code>type: 'dir-dependency'</code>) are
+preserved; omitted <code>parent</code> values are filled from <code>opts.from</code>. Plugin callback
+errors are attributed to the active plugin and, for <code>CssSyntaxError</code>, refresh
+the <code>plugin:</code> message prefix.</p>
+<p>Unsupported plugin values fail with named errors without loading PostCSS:
+<code>InvalidPluginError</code> for non-plugins, <code>UnknownPluginEventError</code> for unknown
+visitor events, and <code>UnsupportedPluginFeatureError</code> when a syntax object is
+used as a plugin. Custom parser, syntax, and stringifier <em>process options</em>
+still throw <code>UnsupportedSyntaxError</code>.</p>
+<p>The plugin contract suite in <code>packages/postcss-go/test/plugin-contract.test.ts</code>
+runs the same lifecycle, mutation, warning, message, and async-visitor cases
+against the native Node backend, the browser WASM Worker, and upstream PostCSS.
+<code>packages/postcss-go/test/real-plugins.test.ts</code> additionally checks <code>postcss-import</code>
+on native against upstream PostCSS, and mutation-heavy plus asynchronous plugin
+fixtures across native and WASM Worker. Go-native plugins in <code>pkg/api</code> are a
+separate single-pass API and are not this runtime.</p>
+<h2 id="parse-and-stringify">Parse and stringify</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ts"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { parse, stringify } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '@postcss-go/core'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> root</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> parse</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'.button { color: red; }'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">root.</span><span style="color:#B392F0">walkDecls</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">decl</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=&gt;</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (decl.prop </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'color'</span><span style="color:#E1E4E8">) decl.value </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> 'tomato'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">await</span><span style="color:#B392F0"> stringify</span><span style="color:#E1E4E8">(root));</span></span></code></pre>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>parse(css, options)</code></td>
+<td>Resolve to a live PostCSS-shaped AST root.</td>
+</tr>
+<tr>
+<td><code>process(css, options)</code></td>
+<td>Run the Go CSS pipeline without a JavaScript plugin chain.</td>
+</tr>
+<tr>
+<td><code>stringify(root, options)</code></td>
+<td>Resolve to serialized CSS.</td>
+</tr>
+<tr>
+<td><code>noWork(css, options)</code></td>
+<td>Apply no-plugin source-map behavior.</td>
+</tr>
+</tbody>
+</table>
+<p><code>parseAst</code> returns the serializable AST DTO from the service. <code>stringifyAst</code> and
+<code>toResult</code> remain available as lower-level helpers. Public <code>process()</code> and
+<code>toResult()</code> return a live <code>Root</code> (or <code>Document</code>) with shared <code>Input</code> metadata,
+matching <code>parse()</code> and <code>Processor#process()</code>. <code>toResult</code> generates source maps
+through <code>stringifyResult</code> so Document structure is preserved.</p>
+<p><code>postcss.parse</code> / <code>helpers.postcss.parse</code> use the in-process N-API parser, the
+same Go tokenizer as <code>parseSync()</code>. <code>Node#toString()</code> and
+<code>helpers.postcss.stringify</code> use the Go stringifier. On the browser WASM Worker
+path those synchronous helpers throw <code>SyncBackendUnavailableError</code>.</p>
+<h2 id="source-maps">Source maps</h2>
+<p>PostCSS-shaped <code>map</code> options are normalized before they cross the bridge. Go
+owns previous-map loading and composition, identity maps for empty plugin
+pipelines, annotation cleanup, inline/external <code>sourceMappingURL</code> emission, and
+the resolved external map filename for process, no-work, and stringify.
+JavaScript callback options (<code>map.prev</code> and <code>map.annotation</code>) are evaluated once
+at the API boundary; <code>map.prev</code> must be synchronous, while annotation callbacks
+may be async and receive a live PostCSS-shaped root. <code>PreviousMap</code> exposes owned
+annotation, inline-map, JSON, and source-content metadata to JavaScript callers.
+<code>Result.mapFile</code> surfaces the external map path reported by Go.</p>
+<h2 id="explicit-synchronous-apis">Explicit synchronous APIs</h2>
+<p><code>parseSync</code>, <code>processSync</code>, <code>stringifySync</code>, and <code>noWorkSync</code> use the in-process
+Node N-API backend and never wait on a Promise. If the native addon is unavailable they throw
+<code>SyncBackendUnavailableError</code>.</p>
+<p>Use <code>getBackendCapabilities()</code> to inspect the default asynchronous backend and
+whether a synchronous backend is installed. Each service also exposes a stable
+<code>capabilities</code> object, including <code>backendWorkOffMainThread</code>. Setting
+<code>POSTCSS_GO_DISABLE_NATIVE=1</code> explicitly disables native discovery, which is
+useful when validating missing-native diagnostics or an explicitly selected
+platform-package failure.</p>
+<p>Every processing result exposes <code>result.backend</code>, identifying the backend that
+actually parsed and stringified that result (<code>native</code> in Node and
+<code>wasm-worker</code> for the browser service). This is separate from capability
+discovery: availability answers what can run; <code>result.backend</code> answers what did
+run.</p>
+<p><code>processSync()</code> rejects a Promise or thenable returned by a plugin creator,
+<code>prepare</code>, a visitor, <code>Once</code>, <code>OnceExit</code>, or a map annotation callback with
+<code>AsyncPluginError</code>. Use <code>process()</code> for asynchronous plugins.</p>
+<p><code>helpers.postcss.parse</code>, AST string insertion (<code>root.append('.a{}')</code>),
+<code>Node#toString()</code>, and <code>helpers.postcss.stringify</code> use the same in-process N-API
+Go parser/stringifier as <code>parseSync()</code> / <code>stringifySync()</code>. On the browser WASM
+Worker path those helpers throw <code>SyncBackendUnavailableError</code>; plugins may still
+mutate already-hydrated nodes and construct AST objects without parsing or
+stringifying CSS.</p>
+<p>Synchronous parsing and processing block the Node.js event loop. Prefer the
+asynchronous API for server request paths. Promise-returning APIs prefer the
+native addon’s <code>napi_async_work</code> methods, which execute Go outside the Node.js
+main thread. The default is intentionally native-required: when the compatible
+async addon is unavailable, Promise-returning APIs throw
+<code>AsyncBackendUnavailableError</code> instead of silently changing transports.</p>
+<p><code>stringifySync(root, builder)</code> replays Go stringifier chunks through the
+PostCSS-shaped builder callback. <code>stringifySync(root, options)</code> returns a string
+via N-API; the two call forms are explicit and do not select a backend
+implicitly.</p>
+<h2 id="engine-and-service">Engine and service</h2>
+<p>Public Promise-returning APIs and the CLI share the same worker-backed native
+backend. Node has no transport-selection environment variable. The
+browser-compatible service is exposed through <code>@postcss-go/core/wasm</code>
+(<code>BrowserPostcssGoService</code>, <code>createBrowserProcessor</code>, and the WASM assets), not
+the main Node entry. The lower-level <code>@postcss-go/core/browser</code> module is also
+available. See <a href="./browser-wasm/">Browser and WASM</a> for CSP, asset loading, and
+the async-only contract.</p>
+<h2 id="compatibility-boundary">Compatibility boundary</h2>
+<p>JavaScript plugins, configuration loading, AST helpers, warnings, errors,
+inputs, previous maps, and result objects are implemented by
+<code>@postcss-go/core</code>; the production package does not load <code>postcss</code>.</p>
+<p>postcss-go deliberately does not reproduce implicit <code>LazyResult</code> execution:
+<code>process()</code> always returns a <code>Promise&lt;Result&gt;</code>, while <code>processSync()</code> returns a
+<code>Result</code> immediately. Reading <code>.css</code>, calling <code>.toString()</code>, or awaiting an
+unstarted result never triggers work.</p>
+<p>The exported <code>Parser</code>, <code>CustomParser</code>, <code>Syntax</code>, <code>CustomStringifier</code>, <code>StringifierBuilder</code>,
+<code>SourceMap</code>, and <code>ProcessOptions</code> types define the public extension boundary.
+Custom parser, syntax, and stringifier values are currently rejected with
+<code>UnsupportedSyntaxError</code> before crossing a Go backend. Custom AST node types
+are rejected with <code>UnsupportedAstNodeError</code> at native and WASM codec boundaries
+instead of being dropped or converted to a built-in node.</p>
+<p>This rejection also applies to explicitly supplied PostCSS default parser or
+stringifier delegates. Those options are redundant for postcss-go and should be
+omitted; they are never identified by function name or silently discarded.</p>
+</article></main><script type="module">async function e(e,t){try{await navigator.clipboard.writeText(e)}catch{let e=window.getSelection(),n=document.createRange(),r=t.closest(`[data-code-sample], [data-install-panel]`)?.querySelector(`code`)||t.parentElement?.querySelector(`code`);r&&(n.selectNodeContents(r),e?.removeAllRanges(),e?.addRange(n),document.execCommand(`copy`),e?.removeAllRanges())}t.textContent=`Copied`,window.setTimeout(()=>{t.textContent=`Copy`},1400)}document.querySelectorAll(`[data-code-sample]`).forEach(t=>{let n=t.querySelector(`[data-copy-code]`),r=t.querySelector(`code`);!n||!r||n.addEventListener(`click`,async()=>{await e(r.textContent||``,n)})}),document.querySelectorAll(`[data-install-tabs]`).forEach(t=>{let n=Array.from(t.querySelectorAll(`[data-install-tab]`)),r=Array.from(t.querySelectorAll(`[data-install-panel]`));n.forEach((e,t)=>{e.addEventListener(`click`,()=>{let t=e.dataset.installTab;t&&(n.forEach(t=>{let n=t===e;t.setAttribute(`aria-selected`,String(n)),t.tabIndex=n?0:-1}),r.forEach(e=>{e.hidden=e.dataset.installPanel!==t}))}),e.addEventListener(`keydown`,e=>{if(e.key!==`ArrowRight`&&e.key!==`ArrowLeft`)return;e.preventDefault();let r=e.key===`ArrowRight`?1:-1;n[(t+r+n.length)%n.length]?.focus()})}),t.querySelectorAll(`[data-install-copy]`).forEach(t=>{t.addEventListener(`click`,async()=>{let n=t.parentElement?.querySelector(`code`);await e(n?.textContent||``,t)})})});</script></body></html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="description" content="CLI reference"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>CLI reference · postcss-go</title><script>
+  (() => {
+    const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem('postcss-go-theme') || system;
+    } catch {
+      document.documentElement.dataset.theme = system;
+    }
+  })();
+</script><link rel="stylesheet" href="/_astro/SiteNav.o3bCsUYS.css"></head><body><div class="fixed inset-0 -z-10 grid-bg"></div><div class="fixed inset-0 -z-10 noise"></div><nav class="site-nav mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10"><a href="/" class="flex items-center gap-3 font-mono text-sm font-bold tracking-tight"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-acid text-ink">›_</span>postcss-go<span class="hidden rounded border border-white/15 px-2 py-1 text-[10px] font-normal uppercase tracking-[.18em] text-white/50 sm:block">experimental</span></a><div class="site-nav__links hidden items-center gap-2 text-xs font-medium text-white/55 md:flex"><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid text-acid site-nav__link" href="/guide/get-started/" aria-current="page">Guide</a><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid site-nav__link" href="/progress/">Progress</a><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid site-nav__link" href="/architecture/">Architecture</a><button id="theme-toggle" class="theme-toggle site-nav__link rounded-full border border-transparent px-3 py-2 transition cursor-pointer hover:text-acid" type="button" aria-label="Toggle color theme" title="Toggle color theme">☼</button><a class="site-nav__github flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white transition hover:text-acid" href="https://github.com/postcss-go/postcss-go" target="_blank" rel="noreferrer"><span>GitHub ↗</span><span class="text-white/25" aria-hidden="true">·</span><span class="flex items-center gap-1 font-mono text-[10px]" aria-label="GitHub stars"><span aria-hidden="true">★</span><span id="github-star-count">0</span></span></a></div></nav><script type="module">var e=document.querySelector(`#theme-toggle`),t=document.documentElement;function n(){let n=t.dataset.theme===`light`;e&&(e.textContent=n?`☾`:`☼`,e.setAttribute(`aria-label`,n?`Switch to dark mode`:`Switch to light mode`),e.setAttribute(`title`,n?`Switch to dark mode`:`Switch to light mode`))}n(),e?.addEventListener(`click`,()=>{let e=t.dataset.theme===`light`?`dark`:`light`;t.dataset.theme=e;try{localStorage.setItem(`postcss-go-theme`,e)}catch{}n()});</script><main class="mx-auto grid max-w-7xl grid-cols-1 gap-[clamp(3.5rem,9vw,8rem)] px-6 pb-24 pt-8 min-[761px]:grid-cols-[15rem_minmax(0,1fr)] lg:px-10 lg:pt-16"><aside class="mb-10 self-start min-[761px]:sticky min-[761px]:top-8 min-[761px]:mb-0" aria-label="Guide navigation"><div class="mb-4 font-mono text-[.68rem] uppercase tracking-[.14em] text-acid">Documentation</div><nav class="flex gap-5 overflow-x-auto whitespace-nowrap border-t border-white/10 px-0 pb-[.35rem] pt-[.95rem] min-[761px]:grid min-[761px]:gap-[.45rem] min-[761px]:overflow-visible min-[761px]:whitespace-normal min-[761px]:border-l min-[761px]:border-t-0 min-[761px]:pl-4 min-[761px]:pb-0 min-[761px]:pt-0"><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/get-started/">Get started</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid! text-acid!" href="/guide/cli-reference/" aria-current="page">CLI reference</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/javascript-api/">JavaScript API</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/browser-wasm/">Browser and WASM</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/core-css-compatibility/">Core CSS compatibility</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/migration/">Migration</a><a class="py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!" href="/guide/go-api/">Go API</a></nav></aside><article class="progress-content guide-content min-w-0 max-w-none min-[761px]:max-w-[52rem]"><h1 id="cli-reference">CLI reference</h1>
+<p><code>postcss-go</code> processes CSS files through the Go engine while loading the same
+configuration shape used by PostCSS projects.</p>
+<h2 id="at-a-glance">At a glance</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>What it does</th>
+<th>Typical entry</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Files</td>
+<td>Process one file, a directory, or a glob</td>
+<td><code>postcss-go src/**/*.css --dir dist</code></td>
+</tr>
+<tr>
+<td>Output</td>
+<td>Write a file, directory, or replace inputs</td>
+<td><code>-o</code>, <code>--dir</code>, <code>--replace</code></td>
+</tr>
+<tr>
+<td>Plugins</td>
+<td>Load a PostCSS plugin chain</td>
+<td><code>-u autoprefixer</code></td>
+</tr>
+<tr>
+<td>Development</td>
+<td>Re-run when source files change</td>
+<td><code>-w</code>, <code>--watch</code></td>
+</tr>
+<tr>
+<td>Maps</td>
+<td>Generate or disable source maps</td>
+<td><code>--no-map</code></td>
+</tr>
+<tr>
+<td>Config</td>
+<td>Point at or discover a config file</td>
+<td><code>--config</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="inputs-and-output">Inputs and output</h2>
+<div class="mb-12 mt-7 grid gap-[.6rem]">
+  <div class="m-0 flex items-center justify-between gap-4 overflow-hidden rounded-[.85rem] border border-white/10 bg-transparent px-4 py-[.9rem]" data-code-sample><code class="min-w-0 overflow-x-auto whitespace-nowrap border-0! bg-transparent! p-0! text-[.86rem] leading-normal text-white">postcss-go input.css -o output.css</code><button class="shrink-0 cursor-pointer rounded-full border border-white/10 bg-transparent px-[.7rem] py-[.35rem] font-mono text-[.68rem] text-white/70 transition-colors duration-150 hover:border-acid hover:text-acid focus-visible:border-acid focus-visible:text-acid focus-visible:outline-none" type="button" data-copy-code>Copy</button></div>
+  <div class="m-0 flex items-center justify-between gap-4 overflow-hidden rounded-[.85rem] border border-white/10 bg-transparent px-4 py-[.9rem]" data-code-sample><code class="min-w-0 overflow-x-auto whitespace-nowrap border-0! bg-transparent! p-0! text-[.86rem] leading-normal text-white">postcss-go src/**/*.css --base src --dir build</code><button class="shrink-0 cursor-pointer rounded-full border border-white/10 bg-transparent px-[.7rem] py-[.35rem] font-mono text-[.68rem] text-white/70 transition-colors duration-150 hover:border-acid hover:text-acid focus-visible:border-acid focus-visible:text-acid focus-visible:outline-none" type="button" data-copy-code>Copy</button></div>
+  <div class="m-0 flex items-center justify-between gap-4 overflow-hidden rounded-[.85rem] border border-white/10 bg-transparent px-4 py-[.9rem]" data-code-sample><code class="min-w-0 overflow-x-auto whitespace-nowrap border-0! bg-transparent! p-0! text-[.86rem] leading-normal text-white">cat input.css | postcss-go -u autoprefixer &gt; output.css</code><button class="shrink-0 cursor-pointer rounded-full border border-white/10 bg-transparent px-[.7rem] py-[.35rem] font-mono text-[.68rem] text-white/70 transition-colors duration-150 hover:border-acid hover:text-acid focus-visible:border-acid focus-visible:text-acid focus-visible:outline-none" type="button" data-copy-code>Copy</button></div>
+  <div class="m-0 flex items-center justify-between gap-4 overflow-hidden rounded-[.85rem] border border-white/10 bg-transparent px-4 py-[.9rem]" data-code-sample><code class="min-w-0 overflow-x-auto whitespace-nowrap border-0! bg-transparent! p-0! text-[.86rem] leading-normal text-white">postcss-go input.css --replace</code><button class="shrink-0 cursor-pointer rounded-full border border-white/10 bg-transparent px-[.7rem] py-[.35rem] font-mono text-[.68rem] text-white/70 transition-colors duration-150 hover:border-acid hover:text-acid focus-visible:border-acid focus-visible:text-acid focus-visible:outline-none" type="button" data-copy-code>Copy</button></div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-o, --output &lt;file&gt;</code></td>
+<td>Write one input to a specific output file.</td>
+</tr>
+<tr>
+<td><code>--dir &lt;directory&gt;</code></td>
+<td>Write a directory or glob input to a directory.</td>
+</tr>
+<tr>
+<td><code>--replace</code></td>
+<td>Replace input files in place.</td>
+</tr>
+<tr>
+<td><code>--base &lt;directory&gt;</code></td>
+<td>Remove a base path when calculating output paths. Requires <code>--dir</code>.</td>
+</tr>
+<tr>
+<td><code>--ext &lt;extension&gt;</code></td>
+<td>Override the output file extension. Requires <code>--dir</code>.</td>
+</tr>
+<tr>
+<td><code>-w, --watch</code></td>
+<td>Re-process files when they change.</td>
+</tr>
+<tr>
+<td><code>--poll [ms]</code></td>
+<td>Use polling for watch mode; default <code>100</code>. Requires <code>--watch</code>.</td>
+</tr>
+<tr>
+<td><code>-m, --map</code></td>
+<td>Write an external source map.</td>
+</tr>
+<tr>
+<td><code>--no-map</code></td>
+<td>Disable source-map output. Explicit map flags win over config <code>map</code>.</td>
+</tr>
+<tr>
+<td><code>-u, --use &lt;plugin&gt;</code></td>
+<td>Load a plugin by package name or file path (repeatable).</td>
+</tr>
+<tr>
+<td><code>--config &lt;path&gt;</code></td>
+<td>Config file or directory to search from.</td>
+</tr>
+<tr>
+<td><code>--env &lt;name&gt;</code></td>
+<td>Shortcut for setting <code>NODE_ENV</code> for function configs.</td>
+</tr>
+<tr>
+<td><code>--include-dotfiles</code></td>
+<td>Allow globs to match files and directories that begin with <code>.</code>.</td>
+</tr>
+<tr>
+<td><code>--verbose</code></td>
+<td>Print backend and per-file timing details on stderr.</td>
+</tr>
+<tr>
+<td><code>--parser</code> / <code>--syntax</code> / <code>--stringifier</code></td>
+<td>Currently rejected with <code>UnsupportedSyntaxError</code> before import.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="configuration-and-plugins">Configuration and plugins</h2>
+<p>The built-in loader finds <code>postcss.config.js</code>, <code>.cjs</code>, <code>.mjs</code>, <code>.postcssrc.*</code>,
+or JSON configuration without <code>postcss-load-config</code>. A config may export an
+object or an async function. Function configs receive <code>ctx.env</code>, config
+<code>ctx.cwd</code>, current <code>ctx.file</code> metadata, and CLI-derived <code>ctx.options</code>.</p>
+<p>Plugins may be an array of instances or an object mapping module IDs to their
+options. <code>map</code>, <code>parser</code>, <code>syntax</code>, and <code>stringifier</code> are typed configuration
+fields, but custom parser/syntax/stringifier delegates are currently rejected
+with <code>UnsupportedSyntaxError</code>; the CLI never falls back to PostCSS.</p>
+<p>Precedence:</p>
+<ul>
+<li>Explicit <code>--map</code> / <code>--no-map</code> always override config <code>map</code> values.</li>
+<li><code>-u</code> / <code>--use</code> replaces the config plugin list only. Config <code>map</code> and other
+options still load.</li>
+<li>Function configs that need CLI defaults can still read <code>ctx.options.map</code>.</li>
+</ul>
+<div class="mb-12 mt-7 grid gap-[.6rem]">
+  <div class="m-0 flex items-center justify-between gap-4 overflow-hidden rounded-[.85rem] border border-white/10 bg-transparent px-4 py-[.9rem]" data-code-sample><code class="min-w-0 overflow-x-auto whitespace-nowrap border-0! bg-transparent! p-0! text-[.86rem] leading-normal text-white">postcss-go src/**/*.css --dir dist --base src --no-map</code><button class="shrink-0 cursor-pointer rounded-full border border-white/10 bg-transparent px-[.7rem] py-[.35rem] font-mono text-[.68rem] text-white/70 transition-colors duration-150 hover:border-acid hover:text-acid focus-visible:border-acid focus-visible:text-acid focus-visible:outline-none" type="button" data-copy-code>Copy</button></div>
+  <div class="m-0 flex items-center justify-between gap-4 overflow-hidden rounded-[.85rem] border border-white/10 bg-transparent px-4 py-[.9rem]" data-code-sample><code class="min-w-0 overflow-x-auto whitespace-nowrap border-0! bg-transparent! p-0! text-[.86rem] leading-normal text-white">postcss-go input.css -u autoprefixer -o output.css</code><button class="shrink-0 cursor-pointer rounded-full border border-white/10 bg-transparent px-[.7rem] py-[.35rem] font-mono text-[.68rem] text-white/70 transition-colors duration-150 hover:border-acid hover:text-acid focus-visible:border-acid focus-visible:text-acid focus-visible:outline-none" type="button" data-copy-code>Copy</button></div>
+</div>
+<h2 id="watch-mode">Watch mode</h2>
+<p>Use <code>--watch</code> with a file, directory, or glob, and write somewhere other than
+the inputs: combine it with <code>--dir</code> or <code>-o</code>. <code>--watch</code> and <code>--replace</code> are
+mutually exclusive because in-place writes would re-trigger the watcher.</p>
+<p>Use <code>--verbose</code> to print the backend selected for processing. Node CLI runs
+report <code>Backend: native (native addon available)</code> before the first input, and
+print the per-file <code>result.backend</code> after each finished file.</p>
+</article></main><script type="module">async function e(e,t){try{await navigator.clipboard.writeText(e)}catch{let e=window.getSelection(),n=document.createRange(),r=t.closest(`[data-code-sample], [data-install-panel]`)?.querySelector(`code`)||t.parentElement?.querySelector(`code`);r&&(n.selectNodeContents(r),e?.removeAllRanges(),e?.addRange(n),document.execCommand(`copy`),e?.removeAllRanges())}t.textContent=`Copied`,window.setTimeout(()=>{t.textContent=`Copy`},1400)}document.querySelectorAll(`[data-code-sample]`).forEach(t=>{let n=t.querySelector(`[data-copy-code]`),r=t.querySelector(`code`);!n||!r||n.addEventListener(`click`,async()=>{await e(r.textContent||``,n)})}),document.querySelectorAll(`[data-install-tabs]`).forEach(t=>{let n=Array.from(t.querySelectorAll(`[data-install-tab]`)),r=Array.from(t.querySelectorAll(`[data-install-panel]`));n.forEach((e,t)=>{e.addEventListener(`click`,()=>{let t=e.dataset.installTab;t&&(n.forEach(t=>{let n=t===e;t.setAttribute(`aria-selected`,String(n)),t.tabIndex=n?0:-1}),r.forEach(e=>{e.hidden=e.dataset.installPanel!==t}))}),e.addEventListener(`keydown`,e=>{if(e.key!==`ArrowRight`&&e.key!==`ArrowLeft`)return;e.preventDefault();let r=e.key===`ArrowRight`?1:-1;n[(t+r+n.length)%n.length]?.focus()})}),t.querySelectorAll(`[data-install-copy]`).forEach(t=>{t.addEventListener(`click`,async()=>{let n=t.parentElement?.querySelector(`code`);await e(n?.textContent||``,t)})})});</script></body></html>

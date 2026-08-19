@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="description" content="Progress"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Progress · postcss-go</title><script>
+  (() => {
+    const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem('postcss-go-theme') || system;
+    } catch {
+      document.documentElement.dataset.theme = system;
+    }
+  })();
+</script><link rel="stylesheet" href="/_astro/SiteNav.o3bCsUYS.css"></head><body><div class="fixed inset-0 -z-10 grid-bg"></div><div class="fixed inset-0 -z-10 noise"></div><nav class="site-nav mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10"><a href="/" class="flex items-center gap-3 font-mono text-sm font-bold tracking-tight"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-acid text-ink">›_</span>postcss-go<span class="hidden rounded border border-white/15 px-2 py-1 text-[10px] font-normal uppercase tracking-[.18em] text-white/50 sm:block">experimental</span></a><div class="site-nav__links hidden items-center gap-2 text-xs font-medium text-white/55 md:flex"><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid site-nav__link" href="/guide/get-started/">Guide</a><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid text-acid site-nav__link" href="/progress/" aria-current="page">Progress</a><a class="rounded-full border border-transparent px-3 py-2 transition hover:text-acid site-nav__link" href="/architecture/">Architecture</a><button id="theme-toggle" class="theme-toggle site-nav__link rounded-full border border-transparent px-3 py-2 transition cursor-pointer hover:text-acid" type="button" aria-label="Toggle color theme" title="Toggle color theme">☼</button><a class="site-nav__github flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white transition hover:text-acid" href="https://github.com/postcss-go/postcss-go" target="_blank" rel="noreferrer"><span>GitHub ↗</span><span class="text-white/25" aria-hidden="true">·</span><span class="flex items-center gap-1 font-mono text-[10px]" aria-label="GitHub stars"><span aria-hidden="true">★</span><span id="github-star-count">0</span></span></a></div></nav><script type="module">var e=document.querySelector(`#theme-toggle`),t=document.documentElement;function n(){let n=t.dataset.theme===`light`;e&&(e.textContent=n?`☾`:`☼`,e.setAttribute(`aria-label`,n?`Switch to dark mode`:`Switch to light mode`),e.setAttribute(`title`,n?`Switch to dark mode`:`Switch to light mode`))}n(),e?.addEventListener(`click`,()=>{let e=t.dataset.theme===`light`?`dark`:`light`;t.dataset.theme=e;try{localStorage.setItem(`postcss-go-theme`,e)}catch{}n()});</script><main class="progress-content mx-auto max-w-5xl px-6 pb-24 pt-12 lg:px-10 lg:pt-20"><section class="mb-8 border-t border-white/10 pt-8" aria-labelledby="breakdown-title"><div class="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end"><div><p class="mt-0 font-mono text-[.68rem] tracking-[.14em]">REQUIRED WORK</p><h1 id="breakdown-title" class="m-0 text-[clamp(1.8rem,4vw,2.8rem)] leading-none tracking-[-.06em]">99% complete.</h1></div><div class="flex items-center justify-between gap-2 font-mono text-[.68rem] text-white/40"><p>77 / 78 required criteria</p><p aria-hidden="true">·</p><p>7 workstreams / 1 release target</p></div></div><div class="mb-[.65rem] h-[.65rem] overflow-hidden rounded-full border border-white/10 bg-black/25" role="progressbar" aria-label="Required completion criteria" aria-valuemin="0" aria-valuemax="100" aria-valuenow="99"><div class="h-full rounded-[inherit] bg-gradient-to-r from-acid to-[#e5ff9a]" style="width: 99%"></div></div><div class="grid grid-cols-1 gap-[.65rem] sm:grid-cols-2 lg:grid-cols-3"><div class="grid grid-cols-[minmax(0,1fr)_auto] gap-4 rounded-[.65rem] border border-white/[.08] bg-white/[.025] p-[.9rem]"><div><span class="block font-mono text-[.62rem] text-white/40">01 · 8/8</span><strong class="mb-[.2rem] mt-[.35rem] block font-mono text-[.78rem]">Zero dependency</strong><small class="block font-mono text-[.62rem] text-white/40">Runtime · package · clean install</small></div><b class="font-mono text-[1.3rem] text-acid">100%</b><i class="col-span-full h-[.3rem] overflow-hidden rounded-full bg-white/[.08]" role="progressbar" aria-label="Zero PostCSS production dependency" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><em class="block h-full rounded-[inherit] bg-acid" style="width: 100%"></em></i></div><div class="grid grid-cols-[minmax(0,1fr)_auto] gap-4 rounded-[.65rem] border border-white/[.08] bg-white/[.025] p-[.9rem]"><div><span class="block font-mono text-[.62rem] text-white/40">02 · 13/13</span><strong class="mb-[.2rem] mt-[.35rem] block font-mono text-[.78rem]">JS API</strong><small class="block font-mono text-[.62rem] text-white/40">Entry point · results · sync APIs</small></div><b class="font-mono text-[1.3rem] text-violet">100%</b><i class="col-span-full h-[.3rem] overflow-hidden rounded-full bg-white/[.08]" role="progressbar" aria-label="Public JavaScript API" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><em class="block h-full rounded-[inherit] bg-violet" style="width: 100%"></em></i></div><div class="grid grid-cols-[minmax(0,1fr)_auto] gap-4 rounded-[.65rem] border border-white/[.08] bg-white/[.025] p-[.9rem]"><div><span class="block font-mono text-[.62rem] text-white/40">03 · 11/11</span><strong class="mb-[.2rem] mt-[.35rem] block font-mono text-[.78rem]">Plugins</strong><small class="block font-mono text-[.62rem] text-white/40">Lifecycle · context · diagnostics</small></div><b class="font-mono text-[1.3rem] text-orange-300">100%</b><i class="col-span-full h-[.3rem] overflow-hidden rounded-full bg-white/[.08]" role="progressbar" aria-label="Plugin execution" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><em class="block h-full rounded-[inherit] bg-orange-300" style="width: 100%"></em></i></div><div class="grid grid-cols-[minmax(0,1fr)_auto] gap-4 rounded-[.65rem] border border-white/[.08] bg-white/[.025] p-[.9rem]"><div><span class="block font-mono text-[.62rem] text-white/40">04 · 18/19</span><strong class="mb-[.2rem] mt-[.35rem] block font-mono text-[.78rem]">Node N-API</strong><small class="block font-mono text-[.62rem] text-white/40">Native async/sync · packaging</small></div><b class="font-mono text-[1.3rem] text-cyan-300">95%</b><i class="col-span-full h-[.3rem] overflow-hidden rounded-full bg-white/[.08]" role="progressbar" aria-label="Node N-API and synchronous execution" aria-valuemin="0" aria-valuemax="100" aria-valuenow="95"><em class="block h-full rounded-[inherit] bg-cyan-300" style="width: 95%"></em></i></div><div class="grid grid-cols-[minmax(0,1fr)_auto] gap-4 rounded-[.65rem] border border-white/[.08] bg-white/[.025] p-[.9rem]"><div><span class="block font-mono text-[.62rem] text-white/40">05 · 11/11</span><strong class="mb-[.2rem] mt-[.35rem] block font-mono text-[.78rem]">Core CSS</strong><small class="block font-mono text-[.62rem] text-white/40">Tokenizer · parser · AST · maps</small></div><b class="font-mono text-[1.3rem] text-acid">100%</b><i class="col-span-full h-[.3rem] overflow-hidden rounded-full bg-white/[.08]" role="progressbar" aria-label="Core CSS pipeline" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><em class="block h-full rounded-[inherit] bg-acid" style="width: 100%"></em></i></div><div class="grid grid-cols-[minmax(0,1fr)_auto] gap-4 rounded-[.65rem] border border-white/[.08] bg-white/[.025] p-[.9rem]"><div><span class="block font-mono text-[.62rem] text-white/40">06 · 7/7</span><strong class="mb-[.2rem] mt-[.35rem] block font-mono text-[.78rem]">CLI/package</strong><small class="block font-mono text-[.62rem] text-white/40">Config · reporting · migration</small></div><b class="font-mono text-[1.3rem] text-violet">100%</b><i class="col-span-full h-[.3rem] overflow-hidden rounded-full bg-white/[.08]" role="progressbar" aria-label="Node CLI and package boundary" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><em class="block h-full rounded-[inherit] bg-violet" style="width: 100%"></em></i></div><div class="grid grid-cols-[minmax(0,1fr)_auto] gap-4 rounded-[.65rem] border border-white/[.08] bg-white/[.025] p-[.9rem]"><div><span class="block font-mono text-[.62rem] text-white/40">07 · 9/9</span><strong class="mb-[.2rem] mt-[.35rem] block font-mono text-[.78rem]">Browser/WASM</strong><small class="block font-mono text-[.62rem] text-white/40">Worker · plugins · CSP · contracts</small></div><b class="font-mono text-[1.3rem] text-sky-300">100%</b><i class="col-span-full h-[.3rem] overflow-hidden rounded-full bg-white/[.08]" role="progressbar" aria-label="Browser and WASM" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><em class="block h-full rounded-[inherit] bg-sky-300" style="width: 100%"></em></i></div></div></section><div class="mb-4 flex gap-[.3rem] overflow-x-auto border-b border-white/10 pb-[.45rem]" role="tablist" aria-label="Progress sections"><button class="shrink-0 cursor-pointer rounded-lg border-0 bg-transparent px-[.85rem] py-[.65rem] font-mono text-[.72rem] text-white/50 transition-colors duration-150 hover:bg-acid/10 hover:text-acid aria-selected:bg-acid/10 aria-selected:text-acid focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-acid" type="button" role="tab" aria-selected="true" data-progress-tab="current">Current status</button><button class="shrink-0 cursor-pointer rounded-lg border-0 bg-transparent px-[.85rem] py-[.65rem] font-mono text-[.72rem] text-white/50 transition-colors duration-150 hover:bg-acid/10 hover:text-acid aria-selected:bg-acid/10 aria-selected:text-acid focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-acid" type="button" role="tab" aria-selected="false" data-progress-tab="required">Required work</button><button class="shrink-0 cursor-pointer rounded-lg border-0 bg-transparent px-[.85rem] py-[.65rem] font-mono text-[.72rem] text-white/50 transition-colors duration-150 hover:bg-acid/10 hover:text-acid aria-selected:bg-acid/10 aria-selected:text-acid focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-acid" type="button" role="tab" aria-selected="false" data-progress-tab="validation">Optional & gates</button><button class="shrink-0 cursor-pointer rounded-lg border-0 bg-transparent px-[.85rem] py-[.65rem] font-mono text-[.72rem] text-white/50 transition-colors duration-150 hover:bg-acid/10 hover:text-acid aria-selected:bg-acid/10 aria-selected:text-acid focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-acid" type="button" role="tab" aria-selected="false" data-progress-tab="plan">Implementation plan</button></div><h2 id="product-target">Product target</h2>
+<p><code>postcss-go</code> is an independent Go-backed implementation of the PostCSS public
+API and plugin model. Production source, published packages, the CLI, and every
+runtime backend must work without installing or loading the <code>postcss</code> package.</p>
+<p>The target Node.js package will provide a PostCSS-compatible public surface
+implemented and owned by postcss-go. This includes the entry point and
+processor, AST classes and constructors, parsing and stringifying helpers,
+plugin helpers, results, inputs, warnings, errors, source maps, and public TypeScript
+contracts.</p>
+<p>PostCSS remains available only in development fixtures, differential tests, the
+vendored upstream compatibility suite, and benchmarks. Unsupported behavior
+must produce a stable diagnostic; it must never silently fall back to PostCSS.</p>
+<h2 id="current-status">Current status</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> Go tokenizer, parser, AST, processor, stringifier, source-map layer, native Node service, and WASM service are implemented.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> The Node N-API addon provides async-work and synchronous parse, process, no-work, stringify, and builder-stringify operations with a compact binary AST.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> The JavaScript plugin runtime implements the PostCSS plugin lifecycle over the postcss-go AST, including context, messages, sync thenable rejection, and the native/WASM/upstream contract suite.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Remove every production runtime and type dependency on the <code>postcss</code> package.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Complete the documented PostCSS-compatible public API using postcss-go-owned implementations.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Export and validate the complete N-API synchronous API.</li>
+<li class="task-list-item"><input type="checkbox" disabled> Build, test, and publish every declared native platform package.</li>
+</ul>
+<h2 id="required-completion-criteria">Required completion criteria</h2>
+<h3 id="zero-postcss-production-dependency">Zero PostCSS production dependency</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> Remove every production <code>import</code>, <code>require</code>, and type reference to <code>postcss</code>.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Remove the <code>postcss</code> runtime, peer, optional, and transitive dependency from <code>postcss-go</code>.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Replace <code>postcss-load-config</code> and <code>postcss-reporter</code> with postcss-go-owned configuration loading and reporting.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Implement plugin helpers, AST classes, parsing, stringifying, results, warnings, and errors without loading PostCSS.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Remove PostCSS class <code>Symbol.hasInstance</code> patches and other runtime coupling.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Remove every execution path that falls back to the <code>postcss</code> package.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Keep PostCSS only as a development/test dependency for differential tests, upstream fixtures, and benchmarks.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Verify a clean packed-package installation with <code>npm ls postcss</code>.</li>
+</ul>
+<h3 id="public-javascript-api">Public JavaScript API</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> Implement the PostCSS-compatible entry point and processor lifecycle within the documented compatibility scope.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Complete postcss-go-owned <code>Processor</code>, result, input, previous-map, warning, and syntax-error parity.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Export postcss-go-owned plugin, result, input, warning, syntax, parser, stringifier, source-map, and process-option types.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Provide explicit asynchronous <code>parse</code>, <code>process</code>, and <code>stringify</code> APIs.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Provide explicit synchronous <code>parseSync</code>, <code>processSync</code>, <code>stringifySync</code>, and <code>noWorkSync</code> APIs.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Document compatibility differences instead of reproducing implicit <code>LazyResult</code> behavior where it conflicts with explicit sync/async APIs.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Implement the baseline Node/Container method, mutation, traversal, JSON, and proxy surface.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Complete Node/Container behavior and type parity through a dedicated upstream contract suite.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Support <code>fromJSON</code> and custom AST nodes in the JavaScript/DTO AST layer.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Preserve or explicitly diagnose custom AST nodes across native binary and WASM boundaries.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Complete error and warning object parity, including source, input, plugin, node, line, and column metadata.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Define a postcss-go-owned custom parser, syntax, and stringifier contract.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Reject unsupported custom syntax with a stable error instead of falling back to PostCSS.</li>
+</ul>
+<h3 id="plugin-execution">Plugin execution</h3>
+<p>This section is the JavaScript plugin runtime used by Node, the CLI, and the
+browser WASM Worker. Go-native <code>Plugin</code>/<code>Visitor</code> values in <code>pkg/api</code> are a
+separate API: they share parse, stringify, and source maps with the JavaScript
+path, but they walk the tree once and do not dirty-rewalk.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> Support plugin normalization, <code>postcssPlugin</code>, <code>prepare</code>, <code>Once</code>, node enter/exit visitors, and <code>OnceExit</code> ordering.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Support synchronous and asynchronous plugin callbacks and Promise rejection on the asynchronous path.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Preserve baseline AST mutation, dirty rewalk, traversal, and visitor ordering semantics.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Implement <code>helpers.postcss</code> entirely with postcss-go-owned classes and services.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Preserve complete plugin context: <code>result</code>, <code>root</code>, <code>opts</code>, <code>from</code>, <code>to</code>, source/input data, custom messages, and <code>lastPlugin</code>.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Complete warning, dependency message, directory-dependency message, and plugin error behavior.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Detect thenables returned by supported synchronous extension points: plugin creators, <code>prepare</code>, visitors, <code>Once</code>, <code>OnceExit</code>, and annotation callbacks.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Throw a stable asynchronous-plugin error from <code>processSync()</code> instead of waiting or switching execution modes.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Provide stable diagnostics for unsupported plugin features without loading PostCSS.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Validate <code>postcss-import</code> on native against upstream PostCSS, and mutation-heavy plus asynchronous plugin fixtures across native and WASM Worker.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Land the plugin contract suite against native, WASM Worker, and upstream PostCSS. Re-running it at publish time is a Validation gate.</li>
+</ul>
+<h3 id="node-n-api-and-synchronous-execution">Node N-API and synchronous execution</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> Implement an in-process Node N-API addon for parse, process, no-work, and stringify operations.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Use the compact binary AST codec for the native path.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Hydrate and serialize live JavaScript AST nodes on the native plugin path.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Add synchronous native parse and stringify service methods.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Add synchronous process, no-work, and source-map generation service methods.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Add a fully synchronous plugin runner that does not enter a Promise or microtask path.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Run Go compute for Promise-returning native operations through Node-API async work instead of on the Node.js main thread.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Use the same native-required asynchronous backend for CLI and public JavaScript APIs.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Export <code>parseSync</code>, <code>processSync</code>, <code>stringifySync</code>, and <code>noWorkSync</code> from the public package.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Expose service and default backend capabilities so callers can determine whether synchronous execution is available.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Throw a stable <code>SyncBackendUnavailableError</code> when a synchronous API is used without the N-API backend.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Keep <code>process()</code> asynchronous and able to run both synchronous and asynchronous plugins on every supported async backend.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Document that synchronous processing blocks the Node.js event loop and recommend async or Worker Thread execution for server workloads.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Define Worker Thread ownership, native cleanup, panic/error translation, and process shutdown behavior.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Add the build, package, and smoke-test matrix for supported macOS, Linux glibc, and Windows targets.</li>
+<li class="task-list-item"><input type="checkbox" disabled> Add Linux musl native packages after Go supports loading c-archive/c-shared runtimes through <code>dlopen</code> (<code>golang/go#54805</code>).</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Verify that the native matrix succeeds on every declared target.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Make missing native runtime artifacts fatal; Node has no transport fallback.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Pack, install, load, and smoke-test every platform package before publication.</li>
+</ul>
+<h3 id="core-css-pipeline">Core CSS pipeline</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> Tokenizer implementation in <code>internal/tokenizer</code> with bridge support.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Parser support for Root, Rule, AtRule, Declaration, and Comment nodes.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> AST, codec, bridge, processor, and stringifier support for Document containers.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> AST mutation: append, prepend, insert, remove, replace, clone, traversal, and raw formatting helpers.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Stringifier support for raw formatting and source maps on the main path.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Structured syntax errors and bridge serialization.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Source-map generation, previous maps, annotations, and source locations on the main path.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Route all compatibility tokenizer behavior through Go.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Implement the supported builder callback adapter with node and boundary metadata.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Move map-generator, previous-map, no-work-result, and annotation normalization into the Go-owned path.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Ensure Node, CLI, WASM, Go API, and source-map behavior share the same documented compatibility contract.</li>
+</ul>
+<h3 id="node-cli-and-package-boundary">Node CLI and package boundary</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> Replace the previous PostCSS plugin-chain execution in <code>packages/postcss-go/src/engine.ts</code> with the postcss-go plugin runtime.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Define a standalone configuration contract for plugins, parser, syntax, stringifier, maps, and environment context.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Load <code>.js</code>, <code>.mjs</code>, and <code>.cjs</code> configuration without <code>postcss-load-config</code>.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Format warnings, errors, and dependency messages without <code>postcss-reporter</code>.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Remove the <code>postcss</code> peer dependency without replacing it with another runtime path to PostCSS.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Report native backend availability and the backend used for processing.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Update package README, type declarations, examples, compatibility tables, and migration documentation.</li>
+</ul>
+<h3 id="browser-and-wasm">Browser and WASM</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> Provide the current Worker/WASM JSON service surface.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Provide a Worker-backed asynchronous WASM backend.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Run real WASM Worker-protocol parse, process, no-work, stringify, source-map, error, and shutdown tests.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Support asynchronous plugins through the browser runtime within the documented contract.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Define stable errors for synchronous APIs and other unsupported Worker features (<code>SyncBackendUnavailableError</code>, <code>WasmWorkerError</code>).</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Rebuild structured <code>CssSyntaxError</code> metadata from the Worker ErrorDTO (line, column, reason, source, file).</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Decide that an initialized main-thread WASM backend is not required; browser remains async Worker-only (no opt-in sync WASM in v1).</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Document CSP, cross-origin isolation, asset loading, <code>SharedArrayBuffer</code>, and non-SAB behavior.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Cover native Node and browser Worker backends with an expanded shared smoke contract (parse/process/stringify/noWork, source maps, syntax errors, async plugins, visitor ordering). Plugin contract coverage against native, WASM Worker, and upstream PostCSS is recorded under Plugin execution; repeating those suites at publish time remains a Validation gate.</li>
+</ul>
+<h2 id="optional-performance-work">Optional performance work</h2>
+<p>The current compact binary AST transfers the tree once before JavaScript plugin
+execution and once before final stringification. A persistent opaque-handle AST
+is an optimization, not a prerequisite for removing PostCSS or exposing the
+N-API synchronous API.</p>
+<p>The Go handle ABI lives in <code>internal/asthandle</code> and is measured by
+<code>pnpm bench:boundary</code> Part E. Production Node N-API exports the same handle
+surface (<code>handleParse</code>, batched field I/O, cursors) for declaration-only plugin
+pipelines; cached native handles beat bulk binary transfer on that visitor shape
+at 1–30 plugins. They are not a full PostCSS node facade (raws, custom nodes,
+dirty rewalk, Result/helpers), and the WASM Worker path still needs a
+serializable tree. Production therefore keeps the compact binary AST and DTO
+protocols for compatibility boundaries.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> Benchmark real one-, three-, five-, ten-, and thirty-plugin pipelines before replacing binary whole-tree transfer.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Prototype an opaque Go AST handle ABI with stable identity, generation checks, explicit disposal, and detached-node lifetime.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Prototype cached field reads, batched reads, mutation batches, and visitor cursors.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Compare native handles, cached handles, binary transfer, a synthetic JSON DTO baseline, and WASM using real plugins.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Adopt handle-backed nodes only where measured end-to-end results outperform the binary AST path.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Retain the binary AST and DTO protocols for the native and WASM compatibility boundaries.</li>
+</ul>
+<h2 id="validation-and-release-gates">Validation and release gates</h2>
+<p>These boxes are the publication checklist. A checked item was verified during
+implementation. Unchecked items stay open until they are re-run or completed as
+part of a release.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Re-run the complete Go, TypeScript, package, CLI, WASM, and upstream differential suites.</li>
+<li class="task-list-item"><input type="checkbox" disabled> Re-run the shared plugin and AST contract suite across every supported backend.</li>
+<li class="task-list-item"><input type="checkbox" disabled> Pack <code>postcss-go</code> and all platform packages into tarballs.</li>
+<li class="task-list-item"><input type="checkbox" disabled> Install the tarballs in clean projects without workspace links.</li>
+<li class="task-list-item"><input type="checkbox" disabled> Verify the packed dependency tree contains no <code>postcss</code>, <code>postcss-load-config</code>, or <code>postcss-reporter</code>.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Verify async processing with synchronous and asynchronous plugins.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Verify N-API <code>parseSync</code>, <code>processSync</code>, <code>stringifySync</code>, and <code>noWorkSync</code>.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Verify <code>processSync()</code> rejects every Promise-returning extension point.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Verify missing native artifacts produce stable async and sync diagnostics without changing transports.</li>
+<li class="task-list-item"><input type="checkbox" disabled> Verify native artifact presence and loading on every published target.</li>
+<li class="task-list-item"><input type="checkbox" disabled> Publish only after all required completion criteria and release gates pass.</li>
+</ul>
+<h2 id="implementation-order">Implementation order</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> Establish the Go CSS data-path baseline.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Implement the JavaScript AST facade and plugin runtime.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Implement the compact binary N-API transport.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Introduce postcss-go-owned public contracts and remove production PostCSS types.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Replace <code>helpers.postcss</code>, class coupling, custom-syntax fallback, configuration loading, and reporting.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Remove all production and published-package dependencies on PostCSS.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Implement the explicit synchronous service and plugin execution path.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Export and test the complete sync and async public APIs.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Complete result, input, warning, error, plugin-context, and custom-syntax compatibility.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Run real-plugin and cross-backend contract suites.</li>
+<li class="task-list-item"><input type="checkbox" disabled> Complete the native build, packaging, installation, and publication matrix.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Update public compatibility and migration documentation.</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Evaluate opaque AST handles only after the required replacement target is complete and benchmarked.</li>
+</ul>
+</main><script type="module">var e=document.querySelector(`.progress-content`),t=e?Array.from(e.children).filter(e=>e.tagName===`H2`):[];if(e&&t.length){let t=e=>e===`product-target`||e===`current-status`?`current`:e===`required-completion-criteria`?`required`:e===`optional-performance-work`||e===`validation-and-release-gates`?`validation`:`plan`,n;Array.from(e.children).forEach(e=>{e.tagName===`H2`&&(n=t(e.id)),n&&(e.dataset.progressGroup=n)}),e.querySelectorAll(`[data-progress-tab]`).forEach(t=>{let n=t.dataset.progressTab;n&&t.addEventListener(`click`,()=>{document.querySelectorAll(`[data-progress-tab]`).forEach(e=>{e.setAttribute(`aria-selected`,String(e===t))}),e.querySelectorAll(`[data-progress-group]`).forEach(e=>{e.hidden=e.dataset.progressGroup!==n})})}),e.querySelectorAll(`[data-progress-group]`).forEach(e=>{e.hidden=e.dataset.progressGroup!==`current`})}</script></body></html>
