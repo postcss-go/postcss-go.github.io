@@ -4,13 +4,23 @@ import CodeSample from '../../components/CodeSample.astro';
 import PlaygroundCta from '../../components/PlaygroundCta.astro';
 
 const install =
-  'pnpm add -D @postcss-go/core autoprefixer webpack webpack-cli css-loader style-loader postcss-loader';
+  'pnpm add -D @postcss-go/core @postcss-go/webpack-loader autoprefixer webpack webpack-cli css-loader style-loader';
 const config = `export default {
   plugins: {
     autoprefixer: {},
   },
 };`;
-const webpackConfig = `import postcssGo from '@postcss-go/core';
+const webpackConfig = `export default {
+  module: {
+    rules: [
+      {
+        test: /\\.css$/i,
+        use: ['style-loader', 'css-loader', '@postcss-go/webpack-loader'],
+      },
+    ],
+  },
+};`;
+const webpackConfigInline = `import autoprefixer from 'autoprefixer';
 
 export default {
   module: {
@@ -21,9 +31,13 @@ export default {
           'style-loader',
           'css-loader',
           {
-            loader: 'postcss-loader',
+            loader: '@postcss-go/webpack-loader',
             options: {
-              implementation: postcssGo,
+              sourceMap: true,
+              postcssOptions: {
+                config: false,
+                plugins: [autoprefixer()],
+              },
             },
           },
         ],
@@ -46,18 +60,23 @@ const scripts = `{
 <ExamplesLayout title="webpack" section="webpack">
   <h1>webpack</h1>
   <p>
-    Point <code>postcss-loader</code> at <code>@postcss-go/core</code> with
-    <code>implementation</code> so the Go engine runs inside the webpack CSS rule. Keep a root
-    <code>postcss.config.js</code> for the plugin list — the loader reads it automatically.
+    Add <code>@postcss-go/webpack-loader</code> to your CSS rule. It calls the Go engine directly and
+    does not depend on <code>postcss</code> or the official <code>postcss-loader</code>. By default
+    it discovers <code>postcss.config.js</code> from the input file, same as the CLI.
   </p>
   <PlaygroundCta id="webpack" />
   <CodeSample filename="terminal" code={install} />
   <CodeSample filename="postcss.config.js" code={config} />
   <CodeSample filename="webpack.config.js" code={webpackConfig} />
-  <CodeSample filename="src/styles.css" code={css} />
   <p>
-    <code>process()</code> on postcss-go is always a Promise. Use postcss-loader v7 or newer, which awaits
-    the result. You can still run the CLI for a bundler-free CSS pass:
+    Pass <code>postcssOptions</code> inline when you want to disable config lookup or set plugins in the
+    webpack config. <code>postcssOptions</code> can also be a function that receives <code
+      >mode</code
+    >,
+    <code>env</code>, <code>file</code>, and the loader context.
   </p>
+  <CodeSample filename="webpack.config.js" code={webpackConfigInline} />
+  <CodeSample filename="src/styles.css" code={css} />
+  <p>You can still run the CLI for a bundler-free CSS pass:</p>
   <CodeSample filename="package.json" code={scripts} />
 </ExamplesLayout>

@@ -255,7 +255,7 @@ html {
   webpack: {
     id: 'webpack',
     title: 'webpack',
-    description: 'CSS as css-loader + postcss-loader would hand to the engine.',
+    description: 'CSS as @postcss-go/webpack-loader would hand to the engine.',
     exampleId: 'webpack',
     plugins: { nested: true, autoprefixer: true },
     input: `.hero {
