@@ -1,0 +1,110 @@
+---
+import ExamplesLayout from '../../layouts/ExamplesLayout.astro';
+import CodeSample from '../../components/CodeSample.astro';
+import PlaygroundCta from '../../components/PlaygroundCta.astro';
+
+const install = 'pnpm add -D @postcss-go/core autoprefixer';
+const config = `export default {
+  plugins: {
+    autoprefixer: {},
+  },
+};`;
+const functionConfig = `export default (ctx) => ({
+  map: ctx.env === 'production' ? { inline: false } : true,
+  plugins: {
+    autoprefixer: {},
+  },
+});`;
+const css = `:root {
+  color-scheme: dark;
+}
+
+.button {
+  display: flex;
+  gap: 0.5rem;
+}`;
+const scripts = `{
+  "scripts": {
+    "build:css": "postcss-go src/index.css -o dist/index.css",
+    "watch:css": "postcss-go src/index.css -o dist/index.css -w"
+  }
+}`;
+const api = `import { readFile, writeFile } from 'node:fs/promises';
+import postcss from '@postcss-go/core';
+import autoprefixer from 'autoprefixer';
+
+const css = await readFile('src/index.css', 'utf8');
+const result = await postcss([autoprefixer()]).process(css, {
+  from: 'src/index.css',
+  to: 'dist/index.css',
+});
+
+await writeFile('dist/index.css', result.css);`;
+---
+
+<ExamplesLayout title="Default" section="default">
+  <h1>Default</h1>
+  <p>
+    The default setup is a <code>postcss.config.js</code> plus the <code>postcss-go</code> CLI. No bundler
+    is required. The same config file is what Vite, Next.js, and other tools already look for.
+  </p>
+  <PlaygroundCta id="default" />
+
+  <h2>Install</h2>
+  <CodeSample filename="terminal" code={install} />
+
+  <h2>Configuration</h2>
+  <p>
+    Object form is enough for a fixed plugin list. <code>false</code> disables an entry;
+    <code>true</code> calls the plugin with no options.
+  </p>
+  <CodeSample filename="postcss.config.js" code={config} />
+  <p>
+    Use a function when maps or plugins depend on <code>NODE_ENV</code> or the current file.
+    <code>ctx.env</code> is <code>NODE_ENV</code>, then <code>development</code>.
+  </p>
+  <CodeSample filename="postcss.config.js" code={functionConfig} />
+
+  <h2>Input and scripts</h2>
+  <CodeSample filename="src/index.css" code={css} />
+  <CodeSample filename="package.json" code={scripts} />
+
+  <h2>JavaScript API</h2>
+  <p>
+    Skip the CLI when you already own the file I/O. <code>process()</code> always returns a Promise —
+    there is no implicit <code>LazyResult</code>.
+  </p>
+  <CodeSample filename="build.mjs" code={api} />
+
+  <h2>CLI</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Command</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>One file</td>
+        <td><code>postcss-go src/index.css -o dist/index.css</code></td>
+      </tr>
+      <tr>
+        <td>Directory / glob</td>
+        <td><code>postcss-go src/**/*.css --base src --dir dist</code></td>
+      </tr>
+      <tr>
+        <td>Watch</td>
+        <td><code>postcss-go src/index.css -o dist/index.css -w</code></td>
+      </tr>
+      <tr>
+        <td>Plugin without a config</td>
+        <td><code>postcss-go src/index.css -u autoprefixer -o dist/index.css</code></td>
+      </tr>
+      <tr>
+        <td>Disable maps</td>
+        <td><code>postcss-go src/index.css -o dist/index.css --no-map</code></td>
+      </tr>
+    </tbody>
+  </table>
+</ExamplesLayout>

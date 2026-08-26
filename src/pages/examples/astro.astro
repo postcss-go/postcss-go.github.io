@@ -1,0 +1,64 @@
+---
+import ExamplesLayout from '../../layouts/ExamplesLayout.astro';
+import CodeSample from '../../components/CodeSample.astro';
+import PlaygroundCta from '../../components/PlaygroundCta.astro';
+
+const scaffold = 'pnpm create astro@latest my-app';
+const install = 'pnpm add -D @postcss-go/core autoprefixer';
+const config = `export default {
+  plugins: {
+    autoprefixer: {},
+  },
+};`;
+const css = `@import "./tokens.css";
+
+:root {
+  --bg: #0a0b0d;
+}
+
+html {
+  background: var(--bg);
+}`;
+const astroFile = `---
+import '../styles/global.css';
+---
+
+<html lang="en">
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style>
+  body {
+    margin: 0;
+  }
+</style>`;
+const scripts = `{
+  "scripts": {
+    "dev": "astro dev",
+    "build": "pnpm build:css && astro build",
+    "build:css": "postcss-go src/styles/**/*.css --base src/styles --dir dist/css"
+  }
+}`;
+---
+
+<ExamplesLayout title="Astro" section="astro">
+  <h1>Astro</h1>
+  <p>
+    Astro's Vite layer loads <code>postcss.config.mjs</code> or <code>.js</code> from the project root.
+    Component <code>&lt;style&gt;</code> blocks and imported global CSS both go through that config.
+  </p>
+  <PlaygroundCta id="astro" />
+  <CodeSample filename="terminal" code={scaffold} />
+  <CodeSample filename="terminal" code={install} />
+  <CodeSample filename="postcss.config.mjs" code={config} />
+  <CodeSample filename="src/styles/global.css" code={css} />
+  <CodeSample filename="src/layouts/Layout.astro" code={astroFile} />
+  <CodeSample filename="package.json" code={scripts} />
+  <p>
+    Tailwind v4 in Astro is often <code>@tailwindcss/vite</code> instead of PostCSS. For the PostCSS plugin
+    path, use the <a class="text-acid" href="../tailwindcss/">Tailwind CSS</a>{' '}
+    example.
+  </p>
+</ExamplesLayout>

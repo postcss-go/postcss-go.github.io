@@ -335,3 +335,230 @@ html[data-theme='light'] .site-nav__github:hover {
 html[data-theme='light'] .site-nav__github {
   border-color: rgba(10, 11, 13, 0.2) !important;
 }
+
+.playground-page {
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+}
+
+@media (min-width: 761px) {
+  .playground-page {
+    height: 100dvh;
+    overflow: hidden;
+  }
+}
+
+.playground-shell {
+  display: grid;
+  width: 100%;
+  max-width: 100rem;
+  min-height: 0;
+  flex: 1;
+  grid-template-columns: 1fr;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+  padding: 0 1.5rem 1.5rem;
+}
+
+@media (min-width: 761px) {
+  .playground-shell {
+    grid-template-columns: 13rem minmax(0, 1fr);
+    padding: 0 2.5rem 1.25rem;
+  }
+}
+
+.playground-aside {
+  min-width: 0;
+}
+
+@media (min-width: 761px) {
+  .playground-aside {
+    overflow: auto;
+    padding-bottom: 0.5rem;
+  }
+}
+
+.playground-main {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.playground-intro h1 {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+
+.playground-intro p {
+  margin: 0.45rem 0 0.9rem;
+  max-width: 46rem;
+  color: var(--copy-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.playground-intro code {
+  border: 1px solid var(--line);
+  border-radius: 0.3rem;
+  background: var(--surface);
+  padding: 0.08rem 0.32rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.86em;
+  color: var(--accent-readable);
+}
+
+.playground {
+  display: flex;
+  min-height: 28rem;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  background: var(--surface-soft);
+}
+
+@media (min-width: 761px) {
+  .playground {
+    min-height: 0;
+  }
+}
+
+.playground__toolbar,
+.playground__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 0.65rem 0.9rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.68rem;
+}
+
+.playground__toolbar {
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.playground__footer {
+  border-top: 1px solid var(--line-soft);
+  color: var(--copy-faint);
+}
+
+.playground__plugins,
+.playground__actions,
+.playground__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 0.85rem;
+}
+
+.playground__check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--copy-muted);
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+}
+
+.playground__check input {
+  accent-color: var(--accent-readable);
+}
+
+.playground__actions button,
+.playground__tabs button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  padding: 0.28rem 0.75rem;
+  color: var(--copy-muted);
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition:
+    border-color 150ms,
+    color 150ms;
+}
+
+.playground__actions button:hover,
+.playground__tabs button:hover,
+.playground__tabs button[aria-selected='true'] {
+  border-color: var(--accent-readable);
+  color: var(--accent-readable);
+}
+
+.playground__panes {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 900px) {
+  .playground__panes {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.playground__pane {
+  display: flex;
+  min-height: 16rem;
+  min-width: 0;
+  flex-direction: column;
+}
+
+@media (min-width: 900px) {
+  .playground__pane {
+    min-height: 0;
+  }
+
+  .playground__pane + .playground__pane {
+    border-left: 1px solid var(--line-soft);
+  }
+}
+
+.playground__label {
+  padding: 0.5rem 0.9rem 0.35rem;
+  color: var(--copy-faint);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.playground__label--tabs {
+  padding-bottom: 0.25rem;
+}
+
+.playground__editor,
+.playground__preview {
+  min-height: 0;
+  flex: 1;
+}
+
+.playground__preview {
+  width: 100%;
+  border: 0;
+  background: var(--canvas);
+}
+
+.playground__error {
+  color: #ff6b6b;
+}
+
+.playground .monaco-editor,
+.playground .monaco-editor-background,
+.playground .margin {
+  background: transparent !important;
+}
+
+html[data-theme='light'] .playground__error {
+  color: #b42318;
+}

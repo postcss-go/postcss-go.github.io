@@ -1,0 +1,30 @@
+---
+import ExamplesLayout from '../../layouts/ExamplesLayout.astro';
+import CodeSample from '../../components/CodeSample.astro';
+
+const install = 'pnpm add -D @postcss-go/core postcss-import';
+const config = `export default {
+  plugins: {
+    'postcss-import': {},
+  },
+};`;
+const css = `@import "./tokens.css";
+@import "./components/card.css";
+
+.page {
+  color: var(--fg);
+}`;
+const build = 'pnpm postcss-go src/index.css -o dist/index.css';
+---
+
+<ExamplesLayout title="postcss-import" section="import">
+  <h1>postcss-import</h1>
+  <p>
+    Inlines <code>@import</code> files and records dependency messages so watch mode can rebuild when
+    a partial changes. Put <code>postcss-import</code> first so later plugins see the concatenated CSS.
+  </p>
+  <CodeSample filename="terminal" code={install} />
+  <CodeSample filename="postcss.config.js" code={config} />
+  <CodeSample filename="src/index.css" code={css} />
+  <CodeSample filename="terminal" code={build} />
+</ExamplesLayout>

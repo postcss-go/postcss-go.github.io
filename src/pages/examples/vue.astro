@@ -1,0 +1,60 @@
+---
+import ExamplesLayout from '../../layouts/ExamplesLayout.astro';
+import CodeSample from '../../components/CodeSample.astro';
+import PlaygroundCta from '../../components/PlaygroundCta.astro';
+
+const scaffold = 'pnpm create vue@latest my-app';
+const install = 'pnpm add -D @postcss-go/core autoprefixer';
+const config = `export default {
+  plugins: {
+    autoprefixer: {},
+  },
+};`;
+const css = `@import "./tokens.css";
+
+#app {
+  max-width: 72rem;
+  margin: 0 auto;
+}`;
+const main = `import './assets/main.css';
+import { createApp } from 'vue';
+import App from './App.vue';
+
+createApp(App).mount('#app');`;
+const vueFile = `<template>
+  <p class="title">Hello</p>
+</template>
+
+<style scoped>
+.title {
+  font-weight: 700;
+}
+</style>`;
+const scripts = `{
+  "scripts": {
+    "dev": "vite",
+    "build": "pnpm build:css && vite build",
+    "build:css": "postcss-go src/assets/**/*.css --base src/assets --dir dist/css"
+  }
+}`;
+---
+
+<ExamplesLayout title="Vue" section="vue">
+  <h1>Vue</h1>
+  <p>
+    Vue 3 apps from <code>create-vue</code> are Vite projects. Put the default PostCSS config at the repo
+    root; Vite applies it to imported CSS and <code>&lt;style&gt;</code> blocks.
+  </p>
+  <PlaygroundCta id="vue" />
+  <CodeSample filename="terminal" code={scaffold} />
+  <CodeSample filename="terminal" code={install} />
+  <CodeSample filename="postcss.config.js" code={config} />
+  <CodeSample filename="src/assets/main.css" code={css} />
+  <CodeSample filename="src/main.ts" code={main} />
+  <CodeSample filename="src/App.vue" code={vueFile} />
+  <CodeSample filename="package.json" code={scripts} />
+  <p>
+    Vue CLI (webpack) uses the same <code>postcss.config.js</code>. For Tailwind, see
+    <a class="text-acid" href="../tailwindcss/">Tailwind CSS</a>.
+  </p>
+</ExamplesLayout>

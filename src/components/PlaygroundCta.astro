@@ -1,0 +1,12 @@
+---
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+const href = `${import.meta.env.BASE_URL}playground/${id}/`;
+---
+
+<p>
+  <a class="text-acid" href={href}>Open live playground →</a>
+</p>

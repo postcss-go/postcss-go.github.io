@@ -1,0 +1,63 @@
+---
+import ExamplesLayout from '../../layouts/ExamplesLayout.astro';
+import CodeSample from '../../components/CodeSample.astro';
+import PlaygroundCta from '../../components/PlaygroundCta.astro';
+
+const install =
+  'pnpm add -D @postcss-go/core autoprefixer webpack webpack-cli css-loader style-loader postcss-loader';
+const config = `export default {
+  plugins: {
+    autoprefixer: {},
+  },
+};`;
+const webpackConfig = `import postcssGo from '@postcss-go/core';
+
+export default {
+  module: {
+    rules: [
+      {
+        test: /\\.css$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              implementation: postcssGo,
+            },
+          },
+        ],
+      },
+    ],
+  },
+};`;
+const css = `.button {
+  display: flex;
+  gap: 0.5rem;
+}`;
+const scripts = `{
+  "scripts": {
+    "build": "webpack --mode production",
+    "build:css": "postcss-go src/**/*.css --base src --dir dist/css --no-map"
+  }
+}`;
+---
+
+<ExamplesLayout title="webpack" section="webpack">
+  <h1>webpack</h1>
+  <p>
+    Point <code>postcss-loader</code> at <code>@postcss-go/core</code> with
+    <code>implementation</code> so the Go engine runs inside the webpack CSS rule. Keep a root
+    <code>postcss.config.js</code> for the plugin list — the loader reads it automatically.
+  </p>
+  <PlaygroundCta id="webpack" />
+  <CodeSample filename="terminal" code={install} />
+  <CodeSample filename="postcss.config.js" code={config} />
+  <CodeSample filename="webpack.config.js" code={webpackConfig} />
+  <CodeSample filename="src/styles.css" code={css} />
+  <p>
+    <code>process()</code> on postcss-go is always a Promise. Use postcss-loader v7 or newer, which awaits
+    the result. You can still run the CLI for a bundler-free CSS pass:
+  </p>
+  <CodeSample filename="package.json" code={scripts} />
+</ExamplesLayout>

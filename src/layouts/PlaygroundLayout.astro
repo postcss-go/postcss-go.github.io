@@ -1,0 +1,64 @@
+---
+import '../styles/global.css';
+import PageHead from '../components/PageHead.astro';
+import SiteNav from '../components/SiteNav.astro';
+import { playgroundGroups } from '../lib/playgrounds';
+
+interface Props {
+  title?: string;
+  description?: string;
+  section?: string;
+}
+
+const { title = '', description = title, section = '' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const groups = playgroundGroups(base);
+---
+
+<html lang="en" class="h-full">
+  <head>
+    <PageHead title={`${title} · Playground · postcss-go`} description={description} />
+  </head>
+  <body class="playground-page">
+    <div class="fixed inset-0 -z-10 grid-bg"></div>
+    <div class="fixed inset-0 -z-10 noise"></div>
+    <SiteNav />
+    <main class="playground-shell">
+      <aside class="playground-aside" aria-label="Playground frameworks">
+        <div class="mb-4 font-mono text-[.68rem] uppercase tracking-[.14em] text-acid">
+          Playground
+        </div>
+        <nav
+          class="grid gap-8 border-t border-white/10 pt-[.95rem] min-[761px]:border-l min-[761px]:border-t-0 min-[761px]:pl-4 min-[761px]:pt-0"
+        >
+          {
+            groups.map((group) => (
+              <div>
+                <div class="mb-3 font-mono text-[.65rem] uppercase tracking-[.12em] text-white/35">
+                  {group.label}
+                </div>
+                <div class="flex gap-5 overflow-x-auto whitespace-nowrap min-[761px]:grid min-[761px]:gap-[.45rem] min-[761px]:overflow-visible min-[761px]:whitespace-normal">
+                  {group.items.map((link) => (
+                    <a
+                      class:list={[
+                        'py-[.35rem] text-[.9rem] leading-normal text-white/50 transition-colors duration-150 hover:text-acid!',
+                        section === link.key && 'text-acid!',
+                      ]}
+                      href={link.href}
+                      aria-current={section === link.key ? 'page' : undefined}
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
+        </nav>
+      </aside>
+      <div class="playground-main">
+        <slot />
+      </div>
+    </main>
+  </body>
+</html>

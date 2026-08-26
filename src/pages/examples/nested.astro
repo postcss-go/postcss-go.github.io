@@ -1,0 +1,36 @@
+---
+import ExamplesLayout from '../../layouts/ExamplesLayout.astro';
+import CodeSample from '../../components/CodeSample.astro';
+
+const install = 'pnpm add -D @postcss-go/core postcss-nested';
+const config = `export default {
+  plugins: {
+    'postcss-nested': {},
+  },
+};`;
+const css = `.card {
+  padding: 1rem;
+
+  & .title {
+    font-weight: 700;
+  }
+
+  &:hover {
+    background: #111;
+  }
+}`;
+const build = 'pnpm postcss-go src/index.css -o dist/index.css';
+---
+
+<ExamplesLayout title="postcss-nested" section="nested">
+  <h1>postcss-nested</h1>
+  <p>
+    Unwraps nested rules into standard CSS. Combine with
+    <a class="text-acid" href="../import/">postcss-import</a> when nested files are split across partials
+    — import first, then nest.
+  </p>
+  <CodeSample filename="terminal" code={install} />
+  <CodeSample filename="postcss.config.js" code={config} />
+  <CodeSample filename="src/index.css" code={css} />
+  <CodeSample filename="terminal" code={build} />
+</ExamplesLayout>
