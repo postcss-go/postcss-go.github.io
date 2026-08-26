@@ -1,0 +1,23 @@
+export interface ExampleLink {
+  label: string;
+  href: string;
+  key: string;
+}
+
+export interface ExampleGroup {
+  label: string;
+  items: ExampleLink[];
+}
+
+export function exampleGroups(base: string): ExampleGroup[] {
+  return [
+    {
+      label: 'Usage',
+      items: [{ label: 'Default', href: `${base}examples/default/`, key: 'default' }],
+    },
+    {
+      label: 'Frameworks',
+      items: [{ label: 'webpack', href: `${base}examples/webpack/`, key: 'webpack' }],
+    },
+  ];
+}

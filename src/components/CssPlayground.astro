@@ -1,0 +1,62 @@
+---
+interface Props {
+  id: string;
+  nested?: boolean;
+  autoprefixer?: boolean;
+}
+
+const { id, nested = true, autoprefixer = true } = Astro.props;
+---
+
+<div class="playground" data-playground data-preset-id={id}>
+  <div class="playground__toolbar">
+    <div class="playground__plugins" role="group" aria-label="Plugins">
+      <label class="playground__check">
+        <input type="checkbox" data-plugin="nested" checked={nested} />
+        nested
+      </label>
+      <label class="playground__check">
+        <input type="checkbox" data-plugin="autoprefixer" checked={autoprefixer} />
+        autoprefixer
+      </label>
+    </div>
+    <div class="playground__actions">
+      <button type="button" data-reset>Reset</button>
+      <button type="button" data-share>Share</button>
+      <button type="button" data-copy>Copy output</button>
+    </div>
+  </div>
+  <div class="playground__panes">
+    <section class="playground__pane">
+      <div class="playground__label">Input</div>
+      <div class="playground__editor" data-editor="input"></div>
+    </section>
+    <section class="playground__pane">
+      <div class="playground__label playground__label--tabs">
+        <div class="playground__tabs" role="tablist" aria-label="Output">
+          <button type="button" role="tab" data-tab="output" aria-selected="true">Output</button>
+          <button type="button" role="tab" data-tab="preview" aria-selected="false">Preview</button>
+        </div>
+      </div>
+      <div class="playground__editor" data-editor="output" data-panel="output"></div>
+      <iframe
+        class="playground__preview"
+        data-preview
+        data-panel="preview"
+        title="CSS preview"
+        sandbox
+        hidden></iframe>
+    </section>
+  </div>
+  <div class="playground__footer">
+    <span data-status>Loading WASM…</span>
+    <span class="playground__error" data-error hidden></span>
+  </div>
+</div>
+
+<script>
+  import { bootPlayground } from '../lib/playground-app';
+
+  const root = document.querySelector<HTMLElement>('[data-playground]');
+  if (root) bootPlayground(root);
+</script>

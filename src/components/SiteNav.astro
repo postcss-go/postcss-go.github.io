@@ -3,9 +3,11 @@ const base = import.meta.env.BASE_URL;
 const pathname = Astro.url.pathname;
 const homeHref = base;
 const architectureHref = `${base}architecture/`;
-const progressHref = `${base}progress/`;
+const examplesHref = `${base}examples/default/`;
+const playgroundHref = `${base}playground/default/`;
 const guideHref = `${base}guide/get-started/`;
-const isProgress = pathname === `${base}progress/` || pathname === `${base}progress`;
+const isExamples = pathname === `${base}examples/` || pathname.startsWith(`${base}examples`);
+const isPlayground = pathname === `${base}playground/` || pathname.startsWith(`${base}playground`);
 const isGuide = pathname.startsWith(`${base}guide`);
 const isArchitecture = pathname === `${base}architecture/` || pathname === `${base}architecture`;
 const navLink = 'rounded-full border border-transparent px-3 py-2 transition hover:text-acid';
@@ -68,9 +70,14 @@ const githubStars = await (async () => {
       aria-current={isGuide ? 'page' : undefined}>Guide</a
     >
     <a
-      class:list={[isProgress ? activeNavLink : navLink, 'site-nav__link']}
-      href={progressHref}
-      aria-current={isProgress ? 'page' : undefined}>Progress</a
+      class:list={[isExamples ? activeNavLink : navLink, 'site-nav__link']}
+      href={examplesHref}
+      aria-current={isExamples ? 'page' : undefined}>Examples</a
+    >
+    <a
+      class:list={[isPlayground ? activeNavLink : navLink, 'site-nav__link']}
+      href={playgroundHref}
+      aria-current={isPlayground ? 'page' : undefined}>Playground</a
     >
     <a
       class:list={[isArchitecture ? activeNavLink : navLink, 'site-nav__link']}
