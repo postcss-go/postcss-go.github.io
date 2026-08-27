@@ -1,11 +1,15 @@
 ---
+import { playgroundPreset } from '../lib/playgrounds';
+
 interface Props {
   id: string;
   nested?: boolean;
   autoprefixer?: boolean;
 }
 
-const { id, nested = true, autoprefixer = true } = Astro.props;
+const { id, nested = true, autoprefixer = false } = Astro.props;
+const { files } = playgroundPreset(id);
+const inputFile = files.find((file) => file.input) ?? files[0]!;
 ---
 
 <div class="playground" data-playground data-preset-id={id}>
@@ -28,7 +32,26 @@ const { id, nested = true, autoprefixer = true } = Astro.props;
   </div>
   <div class="playground__panes">
     <section class="playground__pane">
-      <div class="playground__label">Input</div>
+      <div class="playground__label playground__label--tabs">
+        <div
+          class="playground__tabs playground__tabs--files"
+          role="tablist"
+          aria-label="Source files"
+        >
+          {
+            files.map((file) => (
+              <button
+                type="button"
+                role="tab"
+                data-file-tab={file.id}
+                aria-selected={file.id === inputFile.id ? 'true' : 'false'}
+              >
+                {file.filename}
+              </button>
+            ))
+          }
+        </div>
+      </div>
       <div class="playground__editor" data-editor="input"></div>
     </section>
     <section class="playground__pane">
