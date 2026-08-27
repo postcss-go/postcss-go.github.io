@@ -36,18 +36,25 @@ export function playgroundInputFile(preset: PlaygroundPreset): PlaygroundFile {
 
 export const PLAYGROUND_LINKS: PlaygroundLink[] = [
   { id: 'default', label: 'Default' },
+  { id: 'vite', label: 'Vite' },
   { id: 'webpack', label: 'webpack' },
 ];
 
 export function playgroundGroups(base: string) {
+  const link = (id: string, label: string) => ({
+    label,
+    href: `${base}playground/${id}/`,
+    key: id,
+  });
+
   return [
     {
+      label: 'Usage',
+      items: [link('default', 'Default')],
+    },
+    {
       label: 'Frameworks',
-      items: PLAYGROUND_LINKS.map((item) => ({
-        label: item.label,
-        href: `${base}playground/${item.id}/`,
-        key: item.id,
-      })),
+      items: [link('vite', 'Vite'), link('webpack', 'webpack')],
     },
   ];
 }
@@ -64,6 +71,12 @@ const postcssConfig = `export default {
   plugins: {
     autoprefixer: {},
   },
+};`;
+
+const viteConfig = `import postcssGo from '@postcss-go/vite-loader';
+
+export default {
+  plugins: [postcssGo()],
 };`;
 
 const webpackConfig = `export default {
@@ -97,6 +110,19 @@ const demoInput = `.hero {
   border-radius: 999px;
   background: #c8ff3d;
   color: #0a0b0d;
+}
+`;
+
+const viteInput = `.hero {
+  display: flex;
+  gap: 0.5rem;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+
+  & h1 span {
+    color: #c8ff3d;
+  }
 }
 `;
 
@@ -137,12 +163,41 @@ export const PLAYGROUND_PRESETS: Record<string, PlaygroundPreset> = {
     ],
     previewHtml: `<main class="hero"><h1>PostCSS, rebuilt.</h1><button class="cta">Get started</button></main>`,
   },
+  vite: {
+    id: 'vite',
+    title: 'Vite',
+    description: 'CSS as @postcss-go/vite-loader would hand to the engine.',
+    exampleId: 'vite',
+    plugins: { nested: true, autoprefixer: true },
+    files: [
+      {
+        id: 'postcss',
+        filename: 'postcss.config.js',
+        language: 'javascript',
+        content: postcssConfig,
+      },
+      {
+        id: 'vite',
+        filename: 'vite.config.js',
+        language: 'javascript',
+        content: viteConfig,
+      },
+      {
+        id: 'css',
+        filename: 'src/styles.css',
+        language: 'css',
+        content: viteInput,
+        input: true,
+      },
+    ],
+    previewHtml: `<main class="hero"><h1>Vite <span>+ PostCSS</span></h1></main>`,
+  },
   webpack: {
     id: 'webpack',
     title: 'webpack',
     description: 'CSS as @postcss-go/webpack-loader would hand to the engine.',
     exampleId: 'webpack',
-    plugins: { nested: true, autoprefixer: false },
+    plugins: { nested: true, autoprefixer: true },
     files: [
       {
         id: 'postcss',

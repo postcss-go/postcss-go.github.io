@@ -17,7 +17,10 @@ export function exampleGroups(base: string): ExampleGroup[] {
     },
     {
       label: 'Frameworks',
-      items: [{ label: 'webpack', href: `${base}examples/webpack/`, key: 'webpack' }],
+      items: [
+        { label: 'Vite', href: `${base}examples/vite/`, key: 'vite' },
+        { label: 'webpack', href: `${base}examples/webpack/`, key: 'webpack' },
+      ],
     },
   ];
 }

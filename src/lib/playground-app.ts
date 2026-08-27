@@ -79,7 +79,7 @@ ${css}
 }
 
 export function bootPlayground(root: HTMLElement) {
-  const id = root.dataset.presetId ?? 'webpack';
+  const id = root.dataset.presetId ?? 'default';
   const preset = playgroundPreset(id);
   const inputFile = playgroundInputFile(preset);
   const inputHost = root.querySelector<HTMLElement>('[data-editor="input"]');

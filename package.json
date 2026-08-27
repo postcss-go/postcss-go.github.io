@@ -15,6 +15,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
+    "test": "vitest run",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -25,7 +26,7 @@
     "*.{json,md,yml,yaml,css}": "prettier --write"
   },
   "dependencies": {
-    "@postcss-go/core": "^0.0.3",
+    "@postcss-go/core": "^0.0.5",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.4",
     "autoprefixer": "^10.5.4",
@@ -46,6 +47,7 @@
     "prettier-plugin-astro": "^0.14.1",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.61.0"
+    "typescript-eslint": "^8.61.0",
+    "vitest": "^3.2.4"
   }
 }

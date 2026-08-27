@@ -1,0 +1,67 @@
+---
+import ExamplesLayout from '../../layouts/ExamplesLayout.astro';
+import CodeSample from '../../components/CodeSample.astro';
+import PlaygroundCta from '../../components/PlaygroundCta.astro';
+
+const install = 'pnpm add -D @postcss-go/core @postcss-go/vite-loader autoprefixer vite';
+const config = `export default {
+  plugins: {
+    autoprefixer: {},
+  },
+};`;
+const viteConfig = `import postcssGo from '@postcss-go/vite-loader';
+
+export default {
+  plugins: [postcssGo()],
+};`;
+const viteConfigInline = `import postcssGo from '@postcss-go/vite-loader';
+import autoprefixer from 'autoprefixer';
+
+export default {
+  plugins: [
+    postcssGo({
+      postcssOptions: {
+        config: false,
+        plugins: [autoprefixer()],
+      },
+    }),
+  ],
+};`;
+const css = `.button {
+  display: flex;
+  gap: 0.5rem;
+}`;
+const scripts = `{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:css": "postcss-go src/**/*.css --base src --dir dist/css --no-map"
+  }
+}`;
+---
+
+<ExamplesLayout title="Vite" section="vite">
+  <h1>Vite</h1>
+  <p>
+    Add <code>@postcss-go/vite-loader</code> to your Vite plugins. It runs before Vite's built-in CSS
+    pipeline, calls the Go engine directly, and does not depend on <code>postcss</code>. By default
+    it discovers <code>postcss.config.js</code> from each input file, same as the CLI.
+  </p>
+  <PlaygroundCta id="vite" />
+  <CodeSample filename="terminal" code={install} />
+  <CodeSample filename="postcss.config.js" code={config} />
+  <CodeSample filename="vite.config.js" code={viteConfig} />
+  <p>
+    Pass <code>postcssOptions</code> inline when you want to disable config lookup or set plugins in the
+    Vite config. <code>postcssOptions</code> can also be a function that receives <code>mode</code>,
+    <code>env</code>, <code>file</code>, and the Vite config.
+  </p>
+  <CodeSample filename="vite.config.js" code={viteConfigInline} />
+  <CodeSample filename="src/styles.css" code={css} />
+  <p>
+    Unless <code>css.postcss</code> is already set, the plugin clears Vite's PostCSS plugin list so the
+    same <code>postcss.config.*</code> is not run twice. You can still run the CLI for a bundler-free
+    CSS pass:
+  </p>
+  <CodeSample filename="package.json" code={scripts} />
+</ExamplesLayout>
