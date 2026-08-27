@@ -13,12 +13,10 @@ const exampleHref = `${import.meta.env.BASE_URL}examples/${spec.exampleId}/`;
 ---
 
 <PlaygroundLayout title={spec.title} description={spec.description} section={id}>
-  <header class="playground-intro">
-    <h1>{spec.title}</h1>
-    <p>
-      {spec.description} Runs the <code>@postcss-go/core</code> WASM worker in this tab — the same engine
-      as the <a class="text-acid" href={exampleHref}>{spec.title} example</a>.
-    </p>
-  </header>
+  <h1>{spec.title}</h1>
+  <p>
+    {spec.description} Runs the <code>@postcss-go/core</code> WASM worker in this tab — the same engine
+    as the <a class="text-acid" href={exampleHref}>{spec.title} example</a>.
+  </p>
   <CssPlayground id={id} nested={spec.plugins.nested} autoprefixer={spec.plugins.autoprefixer} />
 </PlaygroundLayout>

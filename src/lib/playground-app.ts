@@ -1,9 +1,10 @@
+import './browser-env';
 import './monaco-env';
 import * as monaco from 'monaco-editor/editor/editor.api';
 import 'monaco-editor/language/css/monaco.contribution';
 
 import { processCss } from './playground-process';
-import { playgroundPreset, type PluginFlags } from './playgrounds';
+import { playgroundInputFile, playgroundPreset, type PluginFlags } from './playgrounds';
 
 const DARK: monaco.editor.IStandaloneThemeData = {
   base: 'vs-dark',
@@ -78,8 +79,9 @@ ${css}
 }
 
 export function bootPlayground(root: HTMLElement) {
-  const id = root.dataset.presetId ?? 'default';
+  const id = root.dataset.presetId ?? 'webpack';
   const preset = playgroundPreset(id);
+  const inputFile = playgroundInputFile(preset);
   const inputHost = root.querySelector<HTMLElement>('[data-editor="input"]');
   const outputHost = root.querySelector<HTMLElement>('[data-editor="output"]');
   const preview = root.querySelector<HTMLIFrameElement>('[data-preview]');
@@ -94,9 +96,7 @@ export function bootPlayground(root: HTMLElement) {
   monaco.editor.defineTheme('postcss-go-light', LIGHT);
 
   const options: monaco.editor.IStandaloneEditorConstructionOptions = {
-    language: 'css',
-    theme: currentTheme(),
-    fontSize: 13,
+    fontSize: 14,
     fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, monospace',
     minimap: { enabled: false },
     scrollBeyondLastLine: false,
@@ -105,18 +105,43 @@ export function bootPlayground(root: HTMLElement) {
     wordWrap: 'on',
     tabSize: 2,
     renderLineHighlight: 'line',
+    theme: currentTheme(),
   };
+
+  const fileModels = new Map(
+    preset.files.map((file) => [file.id, monaco.editor.createModel(file.content, file.language)]),
+  );
+  const inputModel = fileModels.get(inputFile.id)!;
+  const hashCss = decodeHash();
+  if (hashCss) {
+    inputModel.setValue(hashCss);
+  }
 
   const input = monaco.editor.create(inputHost, {
     ...options,
-    value: decodeHash() || preset.input,
+    model: inputModel,
   });
   const output = monaco.editor.create(outputHost, {
     ...options,
+    language: 'css',
     value: '',
     readOnly: true,
     domReadOnly: true,
   });
+
+  function setInputFile(fileId: string) {
+    const file = preset.files.find((item) => item.id === fileId);
+    const model = fileModels.get(fileId);
+    if (!file || !model) return;
+    input.setModel(model);
+    input.updateOptions({
+      readOnly: !file.input,
+      domReadOnly: !file.input,
+    });
+    root.querySelectorAll<HTMLButtonElement>('[data-file-tab]').forEach((button) => {
+      button.setAttribute('aria-selected', String(button.dataset.fileTab === fileId));
+    });
+  }
 
   let timer = 0;
   let latestCss = '';
@@ -133,10 +158,10 @@ export function bootPlayground(root: HTMLElement) {
   observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
   async function run() {
-    const css = input.getValue();
-    status && (status.textContent = 'Running…');
-    errorBox && (errorBox.hidden = true);
-    monaco.editor.setModelMarkers(input.getModel()!, 'postcss-go', []);
+    const css = inputModel.getValue();
+    if (status) status.textContent = 'Running…';
+    if (errorBox) errorBox.hidden = true;
+    monaco.editor.setModelMarkers(inputModel, 'postcss-go', []);
     try {
       const result = await processCss(css, pluginFlags(root));
       latestCss = result.css;
@@ -145,11 +170,19 @@ export function bootPlayground(root: HTMLElement) {
         preview.srcdoc = previewDocument(result.css, preset.previewHtml);
       }
       if (status) {
-        status.textContent = `${result.backend} · ${result.ms.toFixed(1)}ms`;
+        const warning = 'warning' in result && result.warning ? ` · ${result.warning}` : '';
+        status.textContent = `${result.backend} · ${result.ms.toFixed(1)}ms${warning}`;
       }
     } catch (error) {
       const err = error as { message?: string; reason?: string; line?: number; column?: number };
-      const message = err.reason || err.message || String(error);
+      const message =
+        err.reason ||
+        err.message ||
+        String(error) +
+          (pluginFlags(root).autoprefixer &&
+          String(error).includes('Maximum call stack size exceeded')
+            ? ' — try disabling autoprefixer'
+            : '');
       latestCss = '';
       output.setValue('');
       if (errorBox) {
@@ -157,8 +190,8 @@ export function bootPlayground(root: HTMLElement) {
         errorBox.textContent = message;
       }
       if (status) status.textContent = 'error';
-      if (err.line && input.getModel()) {
-        monaco.editor.setModelMarkers(input.getModel()!, 'postcss-go', [
+      if (err.line) {
+        monaco.editor.setModelMarkers(inputModel, 'postcss-go', [
           {
             startLineNumber: err.line,
             startColumn: err.column || 1,
@@ -179,10 +212,16 @@ export function bootPlayground(root: HTMLElement) {
     }, 200);
   }
 
-  input.onDidChangeModelContent(schedule);
+  inputModel.onDidChangeContent(schedule);
   root.querySelectorAll<HTMLInputElement>('[data-plugin]').forEach((box) => {
     box.addEventListener('change', () => {
       void run();
+    });
+  });
+
+  root.querySelectorAll<HTMLButtonElement>('[data-file-tab]').forEach((button) => {
+    button.addEventListener('click', () => {
+      setInputFile(button.dataset.fileTab!);
     });
   });
 
@@ -200,7 +239,7 @@ export function bootPlayground(root: HTMLElement) {
 
   share?.addEventListener('click', async () => {
     const url = new URL(location.href);
-    url.hash = new URLSearchParams({ css: encodeCss(input.getValue()) }).toString();
+    url.hash = new URLSearchParams({ css: encodeCss(inputModel.getValue()) }).toString();
     await navigator.clipboard.writeText(url.toString());
     share.textContent = 'Copied link';
     window.setTimeout(() => {
@@ -210,7 +249,10 @@ export function bootPlayground(root: HTMLElement) {
 
   reset?.addEventListener('click', () => {
     history.replaceState(null, '', location.pathname + location.search);
-    input.setValue(preset.input);
+    for (const file of preset.files) {
+      fileModels.get(file.id)?.setValue(file.content);
+    }
+    setInputFile(inputFile.id);
     void run();
   });
 

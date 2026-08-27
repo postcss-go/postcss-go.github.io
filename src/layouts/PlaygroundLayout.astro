@@ -15,16 +15,21 @@ const base = import.meta.env.BASE_URL;
 const groups = playgroundGroups(base);
 ---
 
-<html lang="en" class="h-full">
+<html lang="en">
   <head>
     <PageHead title={`${title} · Playground · postcss-go`} description={description} />
   </head>
-  <body class="playground-page">
+  <body>
     <div class="fixed inset-0 -z-10 grid-bg"></div>
     <div class="fixed inset-0 -z-10 noise"></div>
     <SiteNav />
-    <main class="playground-shell">
-      <aside class="playground-aside" aria-label="Playground frameworks">
+    <main
+      class="mx-auto grid w-full max-w-[100rem] grid-cols-1 gap-[clamp(2rem,5vw,3.5rem)] px-6 pb-24 pt-8 min-[761px]:grid-cols-[15rem_minmax(0,1fr)] lg:px-10 lg:pt-16"
+    >
+      <aside
+        class="mb-10 self-start min-[761px]:sticky min-[761px]:top-8 min-[761px]:mb-0"
+        aria-label="Playground frameworks"
+      >
         <div class="mb-4 font-mono text-[.68rem] uppercase tracking-[.14em] text-acid">
           Playground
         </div>
@@ -56,9 +61,9 @@ const groups = playgroundGroups(base);
           }
         </nav>
       </aside>
-      <div class="playground-main">
+      <article class="playground-content min-w-0">
         <slot />
-      </div>
+      </article>
     </main>
   </body>
 </html>

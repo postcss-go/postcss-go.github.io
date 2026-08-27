@@ -1,3 +1,4 @@
+import './browser-env';
 import EditorWorker from 'monaco-editor/editor/editor.worker?worker';
 import CssWorker from 'monaco-editor/language/css/css.worker?worker';
 
