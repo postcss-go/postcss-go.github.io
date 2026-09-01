@@ -1,0 +1,82 @@
+---
+import ExamplesLayout from '../../layouts/ExamplesLayout.astro';
+import CodeSample from '../../components/CodeSample.astro';
+import PlaygroundCta from '../../components/PlaygroundCta.astro';
+
+const install =
+  'pnpm add -D @postcss-go/core @postcss-go/rspack-loader autoprefixer @rspack/core @rspack/cli css-loader style-loader';
+const config = `export default {
+  plugins: {
+    autoprefixer: {},
+  },
+};`;
+const rspackConfig = `export default {
+  module: {
+    rules: [
+      {
+        test: /\\.css$/i,
+        use: ['style-loader', 'css-loader', '@postcss-go/rspack-loader'],
+      },
+    ],
+  },
+};`;
+const rspackConfigInline = `import autoprefixer from 'autoprefixer';
+
+export default {
+  module: {
+    rules: [
+      {
+        test: /\\.css$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: '@postcss-go/rspack-loader',
+            options: {
+              sourceMap: true,
+              postcssOptions: {
+                config: false,
+                plugins: [autoprefixer()],
+              },
+            },
+          },
+        ],
+      },
+    ],
+  },
+};`;
+const css = `.button {
+  display: flex;
+  gap: 0.5rem;
+}`;
+const scripts = `{
+  "scripts": {
+    "build": "rspack --mode production",
+    "build:css": "postcss-go src/**/*.css --base src --dir dist/css --no-map"
+  }
+}`;
+---
+
+<ExamplesLayout title="Rspack" section="rspack">
+  <h1>Rspack</h1>
+  <p>
+    Add <code>@postcss-go/rspack-loader</code> to your CSS rule. It calls the Go engine directly and does
+    not depend on <code>postcss</code> or the official <code>postcss-loader</code>. By default it
+    discovers <code>postcss.config.js</code> from the input file, same as the CLI. You can keep
+    <code>css-loader</code> or Rspack's <code>builtin:css-loader</code> after this loader.
+  </p>
+  <PlaygroundCta id="rspack" />
+  <CodeSample filename="terminal" code={install} />
+  <CodeSample filename="postcss.config.js" code={config} />
+  <CodeSample filename="rspack.config.js" code={rspackConfig} />
+  <p>
+    Pass <code>postcssOptions</code> inline when you want to disable config lookup or set plugins in the
+    Rspack config. <code>postcssOptions</code> can also be a function that receives <code>mode</code
+    >,
+    <code>env</code>, <code>file</code>, and the loader context.
+  </p>
+  <CodeSample filename="rspack.config.js" code={rspackConfigInline} />
+  <CodeSample filename="src/styles.css" code={css} />
+  <p>You can still run the CLI for a bundler-free CSS pass:</p>
+  <CodeSample filename="package.json" code={scripts} />
+</ExamplesLayout>

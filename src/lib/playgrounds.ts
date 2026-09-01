@@ -38,6 +38,7 @@ export const PLAYGROUND_LINKS: PlaygroundLink[] = [
   { id: 'default', label: 'Default' },
   { id: 'vite', label: 'Vite' },
   { id: 'webpack', label: 'webpack' },
+  { id: 'rspack', label: 'Rspack' },
 ];
 
 export function playgroundGroups(base: string) {
@@ -54,7 +55,7 @@ export function playgroundGroups(base: string) {
     },
     {
       label: 'Frameworks',
-      items: [link('vite', 'Vite'), link('webpack', 'webpack')],
+      items: [link('vite', 'Vite'), link('webpack', 'webpack'), link('rspack', 'Rspack')],
     },
   ];
 }
@@ -85,6 +86,17 @@ const webpackConfig = `export default {
       {
         test: /\\.css$/i,
         use: ['style-loader', 'css-loader', '@postcss-go/webpack-loader'],
+      },
+    ],
+  },
+};`;
+
+const rspackConfig = `export default {
+  module: {
+    rules: [
+      {
+        test: /\\.css$/i,
+        use: ['style-loader', 'css-loader', '@postcss-go/rspack-loader'],
       },
     ],
   },
@@ -127,6 +139,19 @@ const viteInput = `.hero {
 `;
 
 const webpackInput = `.hero {
+  display: flex;
+  gap: 0.5rem;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+
+  & h1 span {
+    color: #c8ff3d;
+  }
+}
+`;
+
+const rspackInput = `.hero {
   display: flex;
   gap: 0.5rem;
   min-height: 100vh;
@@ -220,5 +245,34 @@ export const PLAYGROUND_PRESETS: Record<string, PlaygroundPreset> = {
       },
     ],
     previewHtml: `<main class="hero"><h1>webpack <span>+ PostCSS</span></h1></main>`,
+  },
+  rspack: {
+    id: 'rspack',
+    title: 'Rspack',
+    description: 'CSS as @postcss-go/rspack-loader would hand to the engine.',
+    exampleId: 'rspack',
+    plugins: { nested: true, autoprefixer: true },
+    files: [
+      {
+        id: 'postcss',
+        filename: 'postcss.config.js',
+        language: 'javascript',
+        content: postcssConfig,
+      },
+      {
+        id: 'rspack',
+        filename: 'rspack.config.js',
+        language: 'javascript',
+        content: rspackConfig,
+      },
+      {
+        id: 'css',
+        filename: 'src/styles.css',
+        language: 'css',
+        content: rspackInput,
+        input: true,
+      },
+    ],
+    previewHtml: `<main class="hero"><h1>Rspack <span>+ PostCSS</span></h1></main>`,
   },
 };
