@@ -6,7 +6,7 @@ describe('exampleGroups', () => {
   it('includes Vite in Frameworks', () => {
     const groups = exampleGroups('/');
     const frameworks = groups.find((group) => group.label === 'Frameworks');
-    expect(frameworks?.items.map((item) => item.key)).toEqual(['vite', 'webpack']);
+    expect(frameworks?.items.map((item) => item.key)).toEqual(['vite', 'webpack', 'rspack']);
   });
 
   it('builds framework hrefs from the site base', () => {

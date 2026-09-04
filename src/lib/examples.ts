@@ -20,6 +20,7 @@ export function exampleGroups(base: string): ExampleGroup[] {
       items: [
         { label: 'Vite', href: `${base}examples/vite/`, key: 'vite' },
         { label: 'webpack', href: `${base}examples/webpack/`, key: 'webpack' },
+        { label: 'Rspack', href: `${base}examples/rspack/`, key: 'rspack' },
       ],
     },
   ];
