@@ -28,7 +28,7 @@
   "dependencies": {
     "@postcss-go/core": "^0.0.5",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.2.4",
+    "astro": "^7.2.10",
     "autoprefixer": "^10.5.4",
     "monaco-editor": "^0.56.0",
     "postcss": "^8.5.26",
