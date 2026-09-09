@@ -26,12 +26,12 @@
     "*.{json,md,yml,yaml,css}": "prettier --write"
   },
   "dependencies": {
-    "@postcss-go/core": "^0.0.5",
+    "@postcss-go/core": "^0.0.6",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.10",
-    "autoprefixer": "^10.5.4",
+    "autoprefixer": "^10.5.5",
     "monaco-editor": "^0.56.0",
-    "postcss": "^8.5.26",
+    "postcss": "^8.5.28",
     "postcss-nested": "^8.0.1",
     "source-map-js": "1.2.1"
   },
@@ -40,7 +40,7 @@
     "eslint": "^10.9.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^3.1.0",
-    "globals": "^17.11.0",
+    "globals": "^17.12.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.4.1",
     "prettier": "^3.8.4",
@@ -48,6 +48,6 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.69.0",
-    "vitest": "^4.1.11"
+    "vitest": "^5.0.0"
   }
 }
